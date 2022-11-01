@@ -1,6 +1,5 @@
 # meedog #
 
-# meedog-mini #
 ### Goal ###
 a wechat miniprogram aiming to help singles look for a partner who can get married.
 ### Technical ###
