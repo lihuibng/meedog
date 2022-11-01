@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.meedog.mapper.PictureMapper">
+  <resultMap id="BaseResultMap" type="com.macro.meedog.model.Picture">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="height" jdbcType="INTEGER" property="height" />
+    <result column="width" jdbcType="INTEGER" property="width" />
+    <result column="size" jdbcType="INTEGER" property="size" />
+    <result column="file_type" jdbcType="INTEGER" property="fileType" />
+    <result column="pic_id" jdbcType="BIGINT" property="picId" />
+    <result column="pic_desc" jdbcType="VARCHAR" property="picDesc" />
+    <result column="pic_tags" jdbcType="VARCHAR" property="picTags" />
+    <result column="pic_md5" jdbcType="VARCHAR" property="picMd5" />
+    <result column="pic_lsh_id" jdbcType="VARCHAR" property="picLshId" />
+    <result column="thumb_pic" jdbcType="VARCHAR" property="thumbPic" />
+    <result column="orig_pic" jdbcType="VARCHAR" property="origPic" />
+    <result column="small_pic" jdbcType="VARCHAR" property="smallPic" />
+    <result column="large_pic" jdbcType="VARCHAR" property="largePic" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, height, width, size, file_type, pic_id, pic_desc, pic_tags, pic_md5, pic_lsh_id, 
+    thumb_pic, orig_pic, small_pic, large_pic, status, create_time, modified_time
+  </sql>
+  <select id="selectByExample" parameterType="com.macro.meedog.model.PictureExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from picture
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from picture
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from picture
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.macro.meedog.model.PictureExample">
+    delete from picture
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.macro.meedog.model.Picture">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into picture (name, height, width, 
+      size, file_type, pic_id, 
+      pic_desc, pic_tags, pic_md5, 
+      pic_lsh_id, thumb_pic, orig_pic, 
+      small_pic, large_pic, status, 
+      create_time, modified_time)
+    values (#{name,jdbcType=VARCHAR}, #{height,jdbcType=INTEGER}, #{width,jdbcType=INTEGER}, 
+      #{size,jdbcType=INTEGER}, #{fileType,jdbcType=INTEGER}, #{picId,jdbcType=BIGINT}, 
+      #{picDesc,jdbcType=VARCHAR}, #{picTags,jdbcType=VARCHAR}, #{picMd5,jdbcType=VARCHAR}, 
+      #{picLshId,jdbcType=VARCHAR}, #{thumbPic,jdbcType=VARCHAR}, #{origPic,jdbcType=VARCHAR}, 
+      #{smallPic,jdbcType=VARCHAR}, #{largePic,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.macro.meedog.model.Picture">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into picture
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="width != null">
+        width,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+      <if test="fileType != null">
+        file_type,
+      </if>
+      <if test="picId != null">
+        pic_id,
+      </if>
+      <if test="picDesc != null">
+        pic_desc,
+      </if>
+      <if test="picTags != null">
+        pic_tags,
+      </if>
+      <if test="picMd5 != null">
+        pic_md5,
+      </if>
+      <if test="picLshId != null">
+        pic_lsh_id,
+      </if>
+      <if test="thumbPic != null">
+        thumb_pic,
+      </if>
+      <if test="origPic != null">
+        orig_pic,
+      </if>
+      <if test="smallPic != null">
+        small_pic,
+      </if>
+      <if test="largePic != null">
+        large_pic,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifiedTime != null">
+        modified_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="width != null">
+        #{width,jdbcType=INTEGER},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=INTEGER},
+      </if>
+      <if test="fileType != null">
+        #{fileType,jdbcType=INTEGER},
+      </if>
+      <if test="picId != null">
+        #{picId,jdbcType=BIGINT},
+      </if>
+      <if test="picDesc != null">
+        #{picDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="picTags != null">
+        #{picTags,jdbcType=VARCHAR},
+      </if>
+      <if test="picMd5 != null">
+        #{picMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="picLshId != null">
+        #{picLshId,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbPic != null">
+        #{thumbPic,jdbcType=VARCHAR},
+      </if>
+      <if test="origPic != null">
+        #{origPic,jdbcType=VARCHAR},
+      </if>
+      <if test="smallPic != null">
+        #{smallPic,jdbcType=VARCHAR},
+      </if>
+      <if test="largePic != null">
+        #{largePic,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.macro.meedog.model.PictureExample" resultType="java.lang.Long">
+    select count(*) from picture
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update picture
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.height != null">
+        height = #{record.height,jdbcType=INTEGER},
+      </if>
+      <if test="record.width != null">
+        width = #{record.width,jdbcType=INTEGER},
+      </if>
+      <if test="record.size != null">
+        size = #{record.size,jdbcType=INTEGER},
+      </if>
+      <if test="record.fileType != null">
+        file_type = #{record.fileType,jdbcType=INTEGER},
+      </if>
+      <if test="record.picId != null">
+        pic_id = #{record.picId,jdbcType=BIGINT},
+      </if>
+      <if test="record.picDesc != null">
+        pic_desc = #{record.picDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picTags != null">
+        pic_tags = #{record.picTags,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picMd5 != null">
+        pic_md5 = #{record.picMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picLshId != null">
+        pic_lsh_id = #{record.picLshId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thumbPic != null">
+        thumb_pic = #{record.thumbPic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.origPic != null">
+        orig_pic = #{record.origPic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smallPic != null">
+        small_pic = #{record.smallPic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.largePic != null">
+        large_pic = #{record.largePic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedTime != null">
+        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update picture
+    set id = #{record.id,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      height = #{record.height,jdbcType=INTEGER},
+      width = #{record.width,jdbcType=INTEGER},
+      size = #{record.size,jdbcType=INTEGER},
+      file_type = #{record.fileType,jdbcType=INTEGER},
+      pic_id = #{record.picId,jdbcType=BIGINT},
+      pic_desc = #{record.picDesc,jdbcType=VARCHAR},
+      pic_tags = #{record.picTags,jdbcType=VARCHAR},
+      pic_md5 = #{record.picMd5,jdbcType=VARCHAR},
+      pic_lsh_id = #{record.picLshId,jdbcType=VARCHAR},
+      thumb_pic = #{record.thumbPic,jdbcType=VARCHAR},
+      orig_pic = #{record.origPic,jdbcType=VARCHAR},
+      small_pic = #{record.smallPic,jdbcType=VARCHAR},
+      large_pic = #{record.largePic,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.macro.meedog.model.Picture">
+    update picture
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="width != null">
+        width = #{width,jdbcType=INTEGER},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=INTEGER},
+      </if>
+      <if test="fileType != null">
+        file_type = #{fileType,jdbcType=INTEGER},
+      </if>
+      <if test="picId != null">
+        pic_id = #{picId,jdbcType=BIGINT},
+      </if>
+      <if test="picDesc != null">
+        pic_desc = #{picDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="picTags != null">
+        pic_tags = #{picTags,jdbcType=VARCHAR},
+      </if>
+      <if test="picMd5 != null">
+        pic_md5 = #{picMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="picLshId != null">
+        pic_lsh_id = #{picLshId,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbPic != null">
+        thumb_pic = #{thumbPic,jdbcType=VARCHAR},
+      </if>
+      <if test="origPic != null">
+        orig_pic = #{origPic,jdbcType=VARCHAR},
+      </if>
+      <if test="smallPic != null">
+        small_pic = #{smallPic,jdbcType=VARCHAR},
+      </if>
+      <if test="largePic != null">
+        large_pic = #{largePic,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.macro.meedog.model.Picture">
+    update picture
+    set name = #{name,jdbcType=VARCHAR},
+      height = #{height,jdbcType=INTEGER},
+      width = #{width,jdbcType=INTEGER},
+      size = #{size,jdbcType=INTEGER},
+      file_type = #{fileType,jdbcType=INTEGER},
+      pic_id = #{picId,jdbcType=BIGINT},
+      pic_desc = #{picDesc,jdbcType=VARCHAR},
+      pic_tags = #{picTags,jdbcType=VARCHAR},
+      pic_md5 = #{picMd5,jdbcType=VARCHAR},
+      pic_lsh_id = #{picLshId,jdbcType=VARCHAR},
+      thumb_pic = #{thumbPic,jdbcType=VARCHAR},
+      orig_pic = #{origPic,jdbcType=VARCHAR},
+      small_pic = #{smallPic,jdbcType=VARCHAR},
+      large_pic = #{largePic,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

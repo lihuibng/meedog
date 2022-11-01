@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.meedog.mapper.ConstellationRelationMapper">
+  <resultMap id="BaseResultMap" type="com.macro.meedog.model.ConstellationRelation">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="constellation_id" jdbcType="BIGINT" property="constellationId" />
+    <result column="constellation_id2" jdbcType="BIGINT" property="constellationId2" />
+    <result column="good" jdbcType="VARCHAR" property="good" />
+    <result column="bad" jdbcType="VARCHAR" property="bad" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, constellation_id, constellation_id2, good, bad, status, create_time, modified_time
+  </sql>
+  <select id="selectByExample" parameterType="com.macro.meedog.model.ConstellationRelationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from constellation_relation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from constellation_relation
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from constellation_relation
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.macro.meedog.model.ConstellationRelationExample">
+    delete from constellation_relation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.macro.meedog.model.ConstellationRelation">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into constellation_relation (constellation_id, constellation_id2, 
+      good, bad, status, 
+      create_time, modified_time)
+    values (#{constellationId,jdbcType=BIGINT}, #{constellationId2,jdbcType=BIGINT}, 
+      #{good,jdbcType=VARCHAR}, #{bad,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.macro.meedog.model.ConstellationRelation">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into constellation_relation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="constellationId != null">
+        constellation_id,
+      </if>
+      <if test="constellationId2 != null">
+        constellation_id2,
+      </if>
+      <if test="good != null">
+        good,
+      </if>
+      <if test="bad != null">
+        bad,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifiedTime != null">
+        modified_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="constellationId != null">
+        #{constellationId,jdbcType=BIGINT},
+      </if>
+      <if test="constellationId2 != null">
+        #{constellationId2,jdbcType=BIGINT},
+      </if>
+      <if test="good != null">
+        #{good,jdbcType=VARCHAR},
+      </if>
+      <if test="bad != null">
+        #{bad,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.macro.meedog.model.ConstellationRelationExample" resultType="java.lang.Long">
+    select count(*) from constellation_relation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update constellation_relation
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.constellationId != null">
+        constellation_id = #{record.constellationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.constellationId2 != null">
+        constellation_id2 = #{record.constellationId2,jdbcType=BIGINT},
+      </if>
+      <if test="record.good != null">
+        good = #{record.good,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bad != null">
+        bad = #{record.bad,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedTime != null">
+        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update constellation_relation
+    set id = #{record.id,jdbcType=BIGINT},
+      constellation_id = #{record.constellationId,jdbcType=BIGINT},
+      constellation_id2 = #{record.constellationId2,jdbcType=BIGINT},
+      good = #{record.good,jdbcType=VARCHAR},
+      bad = #{record.bad,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.macro.meedog.model.ConstellationRelation">
+    update constellation_relation
+    <set>
+      <if test="constellationId != null">
+        constellation_id = #{constellationId,jdbcType=BIGINT},
+      </if>
+      <if test="constellationId2 != null">
+        constellation_id2 = #{constellationId2,jdbcType=BIGINT},
+      </if>
+      <if test="good != null">
+        good = #{good,jdbcType=VARCHAR},
+      </if>
+      <if test="bad != null">
+        bad = #{bad,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.macro.meedog.model.ConstellationRelation">
+    update constellation_relation
+    set constellation_id = #{constellationId,jdbcType=BIGINT},
+      constellation_id2 = #{constellationId2,jdbcType=BIGINT},
+      good = #{good,jdbcType=VARCHAR},
+      bad = #{bad,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

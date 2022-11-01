@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.meedog.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.macro.meedog.model.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="user_level_id" jdbcType="BIGINT" property="userLevelId" />
+    <result column="user_basic_info_id" jdbcType="BIGINT" property="userBasicInfoId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="wechat" jdbcType="VARCHAR" property="wechat" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="session_key" jdbcType="VARCHAR" property="sessionKey" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="wechat_nickname" jdbcType="VARCHAR" property="wechatNickname" />
+    <result column="wechat_gender" jdbcType="INTEGER" property="wechatGender" />
+    <result column="wechat_language" jdbcType="VARCHAR" property="wechatLanguage" />
+    <result column="wechat_city" jdbcType="VARCHAR" property="wechatCity" />
+    <result column="wechat_province" jdbcType="VARCHAR" property="wechatProvince" />
+    <result column="wechat_country" jdbcType="VARCHAR" property="wechatCountry" />
+    <result column="wechat_avatar_url" jdbcType="VARCHAR" property="wechatAvatarUrl" />
+    <result column="wechat_signature" jdbcType="VARCHAR" property="wechatSignature" />
+    <result column="wechat_encrypted_data" jdbcType="VARCHAR" property="wechatEncryptedData" />
+    <result column="wechat_iv" jdbcType="VARCHAR" property="wechatIv" />
+    <result column="wechat_cloudid" jdbcType="VARCHAR" property="wechatCloudid" />
+    <result column="wechat_raw_data" jdbcType="VARCHAR" property="wechatRawData" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="source_type" jdbcType="INTEGER" property="sourceType" />
+    <result column="integration" jdbcType="INTEGER" property="integration" />
+    <result column="growth" jdbcType="INTEGER" property="growth" />
+    <result column="lucky_count" jdbcType="INTEGER" property="luckyCount" />
+    <result column="history_integration" jdbcType="INTEGER" property="historyIntegration" />
+    <result column="personalized_signature" jdbcType="VARCHAR" property="personalizedSignature" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, uid, user_level_id, user_basic_info_id, username, password, nickname, phone, 
+    wechat, openid, session_key, email, wechat_nickname, wechat_gender, wechat_language, 
+    wechat_city, wechat_province, wechat_country, wechat_avatar_url, wechat_signature, 
+    wechat_encrypted_data, wechat_iv, wechat_cloudid, wechat_raw_data, icon, source_type, 
+    integration, growth, lucky_count, history_integration, personalized_signature, status, 
+    create_time, modified_time
+  </sql>
+  <select id="selectByExample" parameterType="com.macro.meedog.model.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.macro.meedog.model.UserExample">
+    delete from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.macro.meedog.model.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user (uid, user_level_id, user_basic_info_id, 
+      username, password, nickname, 
+      phone, wechat, openid, 
+      session_key, email, wechat_nickname, 
+      wechat_gender, wechat_language, wechat_city, 
+      wechat_province, wechat_country, wechat_avatar_url, 
+      wechat_signature, wechat_encrypted_data, wechat_iv, 
+      wechat_cloudid, wechat_raw_data, icon, 
+      source_type, integration, growth, 
+      lucky_count, history_integration, personalized_signature, 
+      status, create_time, modified_time
+      )
+    values (#{uid,jdbcType=BIGINT}, #{userLevelId,jdbcType=BIGINT}, #{userBasicInfoId,jdbcType=BIGINT}, 
+      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, 
+      #{sessionKey,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{wechatNickname,jdbcType=VARCHAR}, 
+      #{wechatGender,jdbcType=INTEGER}, #{wechatLanguage,jdbcType=VARCHAR}, #{wechatCity,jdbcType=VARCHAR}, 
+      #{wechatProvince,jdbcType=VARCHAR}, #{wechatCountry,jdbcType=VARCHAR}, #{wechatAvatarUrl,jdbcType=VARCHAR}, 
+      #{wechatSignature,jdbcType=VARCHAR}, #{wechatEncryptedData,jdbcType=VARCHAR}, #{wechatIv,jdbcType=VARCHAR}, 
+      #{wechatCloudid,jdbcType=VARCHAR}, #{wechatRawData,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, 
+      #{sourceType,jdbcType=INTEGER}, #{integration,jdbcType=INTEGER}, #{growth,jdbcType=INTEGER}, 
+      #{luckyCount,jdbcType=INTEGER}, #{historyIntegration,jdbcType=INTEGER}, #{personalizedSignature,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.macro.meedog.model.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="userLevelId != null">
+        user_level_id,
+      </if>
+      <if test="userBasicInfoId != null">
+        user_basic_info_id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="wechat != null">
+        wechat,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="sessionKey != null">
+        session_key,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="wechatNickname != null">
+        wechat_nickname,
+      </if>
+      <if test="wechatGender != null">
+        wechat_gender,
+      </if>
+      <if test="wechatLanguage != null">
+        wechat_language,
+      </if>
+      <if test="wechatCity != null">
+        wechat_city,
+      </if>
+      <if test="wechatProvince != null">
+        wechat_province,
+      </if>
+      <if test="wechatCountry != null">
+        wechat_country,
+      </if>
+      <if test="wechatAvatarUrl != null">
+        wechat_avatar_url,
+      </if>
+      <if test="wechatSignature != null">
+        wechat_signature,
+      </if>
+      <if test="wechatEncryptedData != null">
+        wechat_encrypted_data,
+      </if>
+      <if test="wechatIv != null">
+        wechat_iv,
+      </if>
+      <if test="wechatCloudid != null">
+        wechat_cloudid,
+      </if>
+      <if test="wechatRawData != null">
+        wechat_raw_data,
+      </if>
+      <if test="icon != null">
+        icon,
+      </if>
+      <if test="sourceType != null">
+        source_type,
+      </if>
+      <if test="integration != null">
+        integration,
+      </if>
+      <if test="growth != null">
+        growth,
+      </if>
+      <if test="luckyCount != null">
+        lucky_count,
+      </if>
+      <if test="historyIntegration != null">
+        history_integration,
+      </if>
+      <if test="personalizedSignature != null">
+        personalized_signature,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifiedTime != null">
+        modified_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="userLevelId != null">
+        #{userLevelId,jdbcType=BIGINT},
+      </if>
+      <if test="userBasicInfoId != null">
+        #{userBasicInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null">
+        #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionKey != null">
+        #{sessionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatNickname != null">
+        #{wechatNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatGender != null">
+        #{wechatGender,jdbcType=INTEGER},
+      </if>
+      <if test="wechatLanguage != null">
+        #{wechatLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatCity != null">
+        #{wechatCity,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatProvince != null">
+        #{wechatProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatCountry != null">
+        #{wechatCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatAvatarUrl != null">
+        #{wechatAvatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatSignature != null">
+        #{wechatSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatEncryptedData != null">
+        #{wechatEncryptedData,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatIv != null">
+        #{wechatIv,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatCloudid != null">
+        #{wechatCloudid,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatRawData != null">
+        #{wechatRawData,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceType != null">
+        #{sourceType,jdbcType=INTEGER},
+      </if>
+      <if test="integration != null">
+        #{integration,jdbcType=INTEGER},
+      </if>
+      <if test="growth != null">
+        #{growth,jdbcType=INTEGER},
+      </if>
+      <if test="luckyCount != null">
+        #{luckyCount,jdbcType=INTEGER},
+      </if>
+      <if test="historyIntegration != null">
+        #{historyIntegration,jdbcType=INTEGER},
+      </if>
+      <if test="personalizedSignature != null">
+        #{personalizedSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.macro.meedog.model.UserExample" resultType="java.lang.Long">
+    select count(*) from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userLevelId != null">
+        user_level_id = #{record.userLevelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userBasicInfoId != null">
+        user_basic_info_id = #{record.userBasicInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickname != null">
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechat != null">
+        wechat = #{record.wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openid != null">
+        openid = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionKey != null">
+        session_key = #{record.sessionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechatNickname != null">
+        wechat_nickname = #{record.wechatNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechatGender != null">
+        wechat_gender = #{record.wechatGender,jdbcType=INTEGER},
+      </if>
+      <if test="record.wechatLanguage != null">
+        wechat_language = #{record.wechatLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechatCity != null">
+        wechat_city = #{record.wechatCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechatProvince != null">
+        wechat_province = #{record.wechatProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechatCountry != null">
+        wechat_country = #{record.wechatCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechatAvatarUrl != null">
+        wechat_avatar_url = #{record.wechatAvatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechatSignature != null">
+        wechat_signature = #{record.wechatSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechatEncryptedData != null">
+        wechat_encrypted_data = #{record.wechatEncryptedData,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechatIv != null">
+        wechat_iv = #{record.wechatIv,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechatCloudid != null">
+        wechat_cloudid = #{record.wechatCloudid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechatRawData != null">
+        wechat_raw_data = #{record.wechatRawData,jdbcType=VARCHAR},
+      </if>
+      <if test="record.icon != null">
+        icon = #{record.icon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sourceType != null">
+        source_type = #{record.sourceType,jdbcType=INTEGER},
+      </if>
+      <if test="record.integration != null">
+        integration = #{record.integration,jdbcType=INTEGER},
+      </if>
+      <if test="record.growth != null">
+        growth = #{record.growth,jdbcType=INTEGER},
+      </if>
+      <if test="record.luckyCount != null">
+        lucky_count = #{record.luckyCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.historyIntegration != null">
+        history_integration = #{record.historyIntegration,jdbcType=INTEGER},
+      </if>
+      <if test="record.personalizedSignature != null">
+        personalized_signature = #{record.personalizedSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedTime != null">
+        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user
+    set id = #{record.id,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=BIGINT},
+      user_level_id = #{record.userLevelId,jdbcType=BIGINT},
+      user_basic_info_id = #{record.userBasicInfoId,jdbcType=BIGINT},
+      username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      wechat = #{record.wechat,jdbcType=VARCHAR},
+      openid = #{record.openid,jdbcType=VARCHAR},
+      session_key = #{record.sessionKey,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      wechat_nickname = #{record.wechatNickname,jdbcType=VARCHAR},
+      wechat_gender = #{record.wechatGender,jdbcType=INTEGER},
+      wechat_language = #{record.wechatLanguage,jdbcType=VARCHAR},
+      wechat_city = #{record.wechatCity,jdbcType=VARCHAR},
+      wechat_province = #{record.wechatProvince,jdbcType=VARCHAR},
+      wechat_country = #{record.wechatCountry,jdbcType=VARCHAR},
+      wechat_avatar_url = #{record.wechatAvatarUrl,jdbcType=VARCHAR},
+      wechat_signature = #{record.wechatSignature,jdbcType=VARCHAR},
+      wechat_encrypted_data = #{record.wechatEncryptedData,jdbcType=VARCHAR},
+      wechat_iv = #{record.wechatIv,jdbcType=VARCHAR},
+      wechat_cloudid = #{record.wechatCloudid,jdbcType=VARCHAR},
+      wechat_raw_data = #{record.wechatRawData,jdbcType=VARCHAR},
+      icon = #{record.icon,jdbcType=VARCHAR},
+      source_type = #{record.sourceType,jdbcType=INTEGER},
+      integration = #{record.integration,jdbcType=INTEGER},
+      growth = #{record.growth,jdbcType=INTEGER},
+      lucky_count = #{record.luckyCount,jdbcType=INTEGER},
+      history_integration = #{record.historyIntegration,jdbcType=INTEGER},
+      personalized_signature = #{record.personalizedSignature,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.macro.meedog.model.User">
+    update user
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="userLevelId != null">
+        user_level_id = #{userLevelId,jdbcType=BIGINT},
+      </if>
+      <if test="userBasicInfoId != null">
+        user_basic_info_id = #{userBasicInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null">
+        wechat = #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionKey != null">
+        session_key = #{sessionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatNickname != null">
+        wechat_nickname = #{wechatNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatGender != null">
+        wechat_gender = #{wechatGender,jdbcType=INTEGER},
+      </if>
+      <if test="wechatLanguage != null">
+        wechat_language = #{wechatLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatCity != null">
+        wechat_city = #{wechatCity,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatProvince != null">
+        wechat_province = #{wechatProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatCountry != null">
+        wechat_country = #{wechatCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatAvatarUrl != null">
+        wechat_avatar_url = #{wechatAvatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatSignature != null">
+        wechat_signature = #{wechatSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatEncryptedData != null">
+        wechat_encrypted_data = #{wechatEncryptedData,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatIv != null">
+        wechat_iv = #{wechatIv,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatCloudid != null">
+        wechat_cloudid = #{wechatCloudid,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatRawData != null">
+        wechat_raw_data = #{wechatRawData,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceType != null">
+        source_type = #{sourceType,jdbcType=INTEGER},
+      </if>
+      <if test="integration != null">
+        integration = #{integration,jdbcType=INTEGER},
+      </if>
+      <if test="growth != null">
+        growth = #{growth,jdbcType=INTEGER},
+      </if>
+      <if test="luckyCount != null">
+        lucky_count = #{luckyCount,jdbcType=INTEGER},
+      </if>
+      <if test="historyIntegration != null">
+        history_integration = #{historyIntegration,jdbcType=INTEGER},
+      </if>
+      <if test="personalizedSignature != null">
+        personalized_signature = #{personalizedSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.macro.meedog.model.User">
+    update user
+    set uid = #{uid,jdbcType=BIGINT},
+      user_level_id = #{userLevelId,jdbcType=BIGINT},
+      user_basic_info_id = #{userBasicInfoId,jdbcType=BIGINT},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      wechat = #{wechat,jdbcType=VARCHAR},
+      openid = #{openid,jdbcType=VARCHAR},
+      session_key = #{sessionKey,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      wechat_nickname = #{wechatNickname,jdbcType=VARCHAR},
+      wechat_gender = #{wechatGender,jdbcType=INTEGER},
+      wechat_language = #{wechatLanguage,jdbcType=VARCHAR},
+      wechat_city = #{wechatCity,jdbcType=VARCHAR},
+      wechat_province = #{wechatProvince,jdbcType=VARCHAR},
+      wechat_country = #{wechatCountry,jdbcType=VARCHAR},
+      wechat_avatar_url = #{wechatAvatarUrl,jdbcType=VARCHAR},
+      wechat_signature = #{wechatSignature,jdbcType=VARCHAR},
+      wechat_encrypted_data = #{wechatEncryptedData,jdbcType=VARCHAR},
+      wechat_iv = #{wechatIv,jdbcType=VARCHAR},
+      wechat_cloudid = #{wechatCloudid,jdbcType=VARCHAR},
+      wechat_raw_data = #{wechatRawData,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      source_type = #{sourceType,jdbcType=INTEGER},
+      integration = #{integration,jdbcType=INTEGER},
+      growth = #{growth,jdbcType=INTEGER},
+      lucky_count = #{luckyCount,jdbcType=INTEGER},
+      history_integration = #{historyIntegration,jdbcType=INTEGER},
+      personalized_signature = #{personalizedSignature,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

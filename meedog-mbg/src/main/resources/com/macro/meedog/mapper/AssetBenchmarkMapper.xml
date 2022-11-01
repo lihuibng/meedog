@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.meedog.mapper.AssetBenchmarkMapper">
+  <resultMap id="BaseResultMap" type="com.macro.meedog.model.AssetBenchmark">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="province_id" jdbcType="BIGINT" property="provinceId" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city_id" jdbcType="BIGINT" property="cityId" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="city_level" jdbcType="INTEGER" property="cityLevel" />
+    <result column="district_id" jdbcType="INTEGER" property="districtId" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="location" jdbcType="OTHER" property="location" typeHandler="com.macro.meedog.common.geo.MysqlGeoPointTypeHandler" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="street" jdbcType="VARCHAR" property="street" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="tag" jdbcType="TINYINT" property="tag" />
+    <result column="house_benchmark" jdbcType="INTEGER" property="houseBenchmark" />
+    <result column="salary_benchmark" jdbcType="INTEGER" property="salaryBenchmark" />
+    <result column="deposit_benchmark" jdbcType="INTEGER" property="depositBenchmark" />
+    <result column="other_asset_benchmark" jdbcType="INTEGER" property="otherAssetBenchmark" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <result column="city_house_benchmark" jdbcType="INTEGER" property="cityHouseBenchmark" />
+    <result column="area_house_benchmark" jdbcType="INTEGER" property="areaHouseBenchmark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.locationCriteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler} and #{criterion.secondValue,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.locationCriteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler} and #{criterion.secondValue,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, province_id, province, city_id, city, city_level, district_id, district, location, 
+    address, street, country, tag, house_benchmark, salary_benchmark, deposit_benchmark, 
+    other_asset_benchmark, status, create_time, modified_time, city_house_benchmark, 
+    area_house_benchmark
+  </sql>
+  <select id="selectByExample" parameterType="com.macro.meedog.model.AssetBenchmarkExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from asset_benchmark
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from asset_benchmark
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from asset_benchmark
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.macro.meedog.model.AssetBenchmarkExample">
+    delete from asset_benchmark
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.macro.meedog.model.AssetBenchmark">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into asset_benchmark (province_id, province, city_id, 
+      city, city_level, district_id, 
+      district, location, 
+      address, street, country, 
+      tag, house_benchmark, salary_benchmark, 
+      deposit_benchmark, other_asset_benchmark, 
+      status, create_time, modified_time, 
+      city_house_benchmark, area_house_benchmark)
+    values (#{provinceId,jdbcType=BIGINT}, #{province,jdbcType=VARCHAR}, #{cityId,jdbcType=BIGINT}, 
+      #{city,jdbcType=VARCHAR}, #{cityLevel,jdbcType=INTEGER}, #{districtId,jdbcType=INTEGER}, 
+      #{district,jdbcType=VARCHAR}, #{location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}, 
+      #{address,jdbcType=VARCHAR}, #{street,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{tag,jdbcType=TINYINT}, #{houseBenchmark,jdbcType=INTEGER}, #{salaryBenchmark,jdbcType=INTEGER}, 
+      #{depositBenchmark,jdbcType=INTEGER}, #{otherAssetBenchmark,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, 
+      #{cityHouseBenchmark,jdbcType=INTEGER}, #{areaHouseBenchmark,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.macro.meedog.model.AssetBenchmark">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into asset_benchmark
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="provinceId != null">
+        province_id,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="cityId != null">
+        city_id,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="cityLevel != null">
+        city_level,
+      </if>
+      <if test="districtId != null">
+        district_id,
+      </if>
+      <if test="district != null">
+        district,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="street != null">
+        street,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="tag != null">
+        tag,
+      </if>
+      <if test="houseBenchmark != null">
+        house_benchmark,
+      </if>
+      <if test="salaryBenchmark != null">
+        salary_benchmark,
+      </if>
+      <if test="depositBenchmark != null">
+        deposit_benchmark,
+      </if>
+      <if test="otherAssetBenchmark != null">
+        other_asset_benchmark,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifiedTime != null">
+        modified_time,
+      </if>
+      <if test="cityHouseBenchmark != null">
+        city_house_benchmark,
+      </if>
+      <if test="areaHouseBenchmark != null">
+        area_house_benchmark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="provinceId != null">
+        #{provinceId,jdbcType=BIGINT},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null">
+        #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cityLevel != null">
+        #{cityLevel,jdbcType=INTEGER},
+      </if>
+      <if test="districtId != null">
+        #{districtId,jdbcType=INTEGER},
+      </if>
+      <if test="district != null">
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="street != null">
+        #{street,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        #{tag,jdbcType=TINYINT},
+      </if>
+      <if test="houseBenchmark != null">
+        #{houseBenchmark,jdbcType=INTEGER},
+      </if>
+      <if test="salaryBenchmark != null">
+        #{salaryBenchmark,jdbcType=INTEGER},
+      </if>
+      <if test="depositBenchmark != null">
+        #{depositBenchmark,jdbcType=INTEGER},
+      </if>
+      <if test="otherAssetBenchmark != null">
+        #{otherAssetBenchmark,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cityHouseBenchmark != null">
+        #{cityHouseBenchmark,jdbcType=INTEGER},
+      </if>
+      <if test="areaHouseBenchmark != null">
+        #{areaHouseBenchmark,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.macro.meedog.model.AssetBenchmarkExample" resultType="java.lang.Long">
+    select count(*) from asset_benchmark
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update asset_benchmark
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.provinceId != null">
+        province_id = #{record.provinceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityId != null">
+        city_id = #{record.cityId,jdbcType=BIGINT},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityLevel != null">
+        city_level = #{record.cityLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.districtId != null">
+        district_id = #{record.districtId,jdbcType=INTEGER},
+      </if>
+      <if test="record.district != null">
+        district = #{record.district,jdbcType=VARCHAR},
+      </if>
+      <if test="record.location != null">
+        location = #{record.location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.street != null">
+        street = #{record.street,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null">
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tag != null">
+        tag = #{record.tag,jdbcType=TINYINT},
+      </if>
+      <if test="record.houseBenchmark != null">
+        house_benchmark = #{record.houseBenchmark,jdbcType=INTEGER},
+      </if>
+      <if test="record.salaryBenchmark != null">
+        salary_benchmark = #{record.salaryBenchmark,jdbcType=INTEGER},
+      </if>
+      <if test="record.depositBenchmark != null">
+        deposit_benchmark = #{record.depositBenchmark,jdbcType=INTEGER},
+      </if>
+      <if test="record.otherAssetBenchmark != null">
+        other_asset_benchmark = #{record.otherAssetBenchmark,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedTime != null">
+        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cityHouseBenchmark != null">
+        city_house_benchmark = #{record.cityHouseBenchmark,jdbcType=INTEGER},
+      </if>
+      <if test="record.areaHouseBenchmark != null">
+        area_house_benchmark = #{record.areaHouseBenchmark,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update asset_benchmark
+    set id = #{record.id,jdbcType=BIGINT},
+      province_id = #{record.provinceId,jdbcType=BIGINT},
+      province = #{record.province,jdbcType=VARCHAR},
+      city_id = #{record.cityId,jdbcType=BIGINT},
+      city = #{record.city,jdbcType=VARCHAR},
+      city_level = #{record.cityLevel,jdbcType=INTEGER},
+      district_id = #{record.districtId,jdbcType=INTEGER},
+      district = #{record.district,jdbcType=VARCHAR},
+      location = #{record.location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler},
+      address = #{record.address,jdbcType=VARCHAR},
+      street = #{record.street,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      tag = #{record.tag,jdbcType=TINYINT},
+      house_benchmark = #{record.houseBenchmark,jdbcType=INTEGER},
+      salary_benchmark = #{record.salaryBenchmark,jdbcType=INTEGER},
+      deposit_benchmark = #{record.depositBenchmark,jdbcType=INTEGER},
+      other_asset_benchmark = #{record.otherAssetBenchmark,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      city_house_benchmark = #{record.cityHouseBenchmark,jdbcType=INTEGER},
+      area_house_benchmark = #{record.areaHouseBenchmark,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.macro.meedog.model.AssetBenchmark">
+    update asset_benchmark
+    <set>
+      <if test="provinceId != null">
+        province_id = #{provinceId,jdbcType=BIGINT},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null">
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cityLevel != null">
+        city_level = #{cityLevel,jdbcType=INTEGER},
+      </if>
+      <if test="districtId != null">
+        district_id = #{districtId,jdbcType=INTEGER},
+      </if>
+      <if test="district != null">
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="street != null">
+        street = #{street,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        tag = #{tag,jdbcType=TINYINT},
+      </if>
+      <if test="houseBenchmark != null">
+        house_benchmark = #{houseBenchmark,jdbcType=INTEGER},
+      </if>
+      <if test="salaryBenchmark != null">
+        salary_benchmark = #{salaryBenchmark,jdbcType=INTEGER},
+      </if>
+      <if test="depositBenchmark != null">
+        deposit_benchmark = #{depositBenchmark,jdbcType=INTEGER},
+      </if>
+      <if test="otherAssetBenchmark != null">
+        other_asset_benchmark = #{otherAssetBenchmark,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cityHouseBenchmark != null">
+        city_house_benchmark = #{cityHouseBenchmark,jdbcType=INTEGER},
+      </if>
+      <if test="areaHouseBenchmark != null">
+        area_house_benchmark = #{areaHouseBenchmark,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.macro.meedog.model.AssetBenchmark">
+    update asset_benchmark
+    set province_id = #{provinceId,jdbcType=BIGINT},
+      province = #{province,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=BIGINT},
+      city = #{city,jdbcType=VARCHAR},
+      city_level = #{cityLevel,jdbcType=INTEGER},
+      district_id = #{districtId,jdbcType=INTEGER},
+      district = #{district,jdbcType=VARCHAR},
+      location = #{location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler},
+      address = #{address,jdbcType=VARCHAR},
+      street = #{street,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=TINYINT},
+      house_benchmark = #{houseBenchmark,jdbcType=INTEGER},
+      salary_benchmark = #{salaryBenchmark,jdbcType=INTEGER},
+      deposit_benchmark = #{depositBenchmark,jdbcType=INTEGER},
+      other_asset_benchmark = #{otherAssetBenchmark,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      city_house_benchmark = #{cityHouseBenchmark,jdbcType=INTEGER},
+      area_house_benchmark = #{areaHouseBenchmark,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

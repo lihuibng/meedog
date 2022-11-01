@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.meedog.mapper.ActivityMapper">
+  <resultMap id="BaseResultMap" type="com.macro.meedog.model.Activity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="place_id" jdbcType="BIGINT" property="placeId" />
+    <result column="usid" jdbcType="BIGINT" property="usid" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="user_nick_name" jdbcType="VARCHAR" property="userNickName" />
+    <result column="user_icon" jdbcType="VARCHAR" property="userIcon" />
+    <result column="alipay_QR" jdbcType="VARCHAR" property="alipayQr" />
+    <result column="wepay_QR" jdbcType="VARCHAR" property="wepayQr" />
+    <result column="wechat_offical_link" jdbcType="VARCHAR" property="wechatOfficalLink" />
+    <result column="wechat_group_QR" jdbcType="VARCHAR" property="wechatGroupQr" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="organizer_name" jdbcType="VARCHAR" property="organizerName" />
+    <result column="organizer_wechat" jdbcType="VARCHAR" property="organizerWechat" />
+    <result column="organizer_phone" jdbcType="VARCHAR" property="organizerPhone" />
+    <result column="factory_status" jdbcType="INTEGER" property="factoryStatus" />
+    <result column="activity_desc" jdbcType="VARCHAR" property="activityDesc" />
+    <result column="participant_limit" jdbcType="INTEGER" property="participantLimit" />
+    <result column="start" jdbcType="TIMESTAMP" property="start" />
+    <result column="end" jdbcType="TIMESTAMP" property="end" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, place_id, usid, uid, user_nick_name, user_icon, alipay_QR, wepay_QR, wechat_offical_link, 
+    wechat_group_QR, name, address, organizer_name, organizer_wechat, organizer_phone, 
+    factory_status, activity_desc, participant_limit, start, end, status, create_time, 
+    modified_time
+  </sql>
+  <select id="selectByExample" parameterType="com.macro.meedog.model.ActivityExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from activity
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from activity
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from activity
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.macro.meedog.model.ActivityExample">
+    delete from activity
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.macro.meedog.model.Activity">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into activity (place_id, usid, uid, 
+      user_nick_name, user_icon, alipay_QR, 
+      wepay_QR, wechat_offical_link, wechat_group_QR, 
+      name, address, organizer_name, 
+      organizer_wechat, organizer_phone, factory_status, 
+      activity_desc, participant_limit, start, 
+      end, status, create_time, 
+      modified_time)
+    values (#{placeId,jdbcType=BIGINT}, #{usid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, 
+      #{userNickName,jdbcType=VARCHAR}, #{userIcon,jdbcType=VARCHAR}, #{alipayQr,jdbcType=VARCHAR}, 
+      #{wepayQr,jdbcType=VARCHAR}, #{wechatOfficalLink,jdbcType=VARCHAR}, #{wechatGroupQr,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{organizerName,jdbcType=VARCHAR}, 
+      #{organizerWechat,jdbcType=VARCHAR}, #{organizerPhone,jdbcType=VARCHAR}, #{factoryStatus,jdbcType=INTEGER}, 
+      #{activityDesc,jdbcType=VARCHAR}, #{participantLimit,jdbcType=INTEGER}, #{start,jdbcType=TIMESTAMP}, 
+      #{end,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifiedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.macro.meedog.model.Activity">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into activity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="placeId != null">
+        place_id,
+      </if>
+      <if test="usid != null">
+        usid,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="userNickName != null">
+        user_nick_name,
+      </if>
+      <if test="userIcon != null">
+        user_icon,
+      </if>
+      <if test="alipayQr != null">
+        alipay_QR,
+      </if>
+      <if test="wepayQr != null">
+        wepay_QR,
+      </if>
+      <if test="wechatOfficalLink != null">
+        wechat_offical_link,
+      </if>
+      <if test="wechatGroupQr != null">
+        wechat_group_QR,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="organizerName != null">
+        organizer_name,
+      </if>
+      <if test="organizerWechat != null">
+        organizer_wechat,
+      </if>
+      <if test="organizerPhone != null">
+        organizer_phone,
+      </if>
+      <if test="factoryStatus != null">
+        factory_status,
+      </if>
+      <if test="activityDesc != null">
+        activity_desc,
+      </if>
+      <if test="participantLimit != null">
+        participant_limit,
+      </if>
+      <if test="start != null">
+        start,
+      </if>
+      <if test="end != null">
+        end,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifiedTime != null">
+        modified_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="placeId != null">
+        #{placeId,jdbcType=BIGINT},
+      </if>
+      <if test="usid != null">
+        #{usid,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="userNickName != null">
+        #{userNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="userIcon != null">
+        #{userIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayQr != null">
+        #{alipayQr,jdbcType=VARCHAR},
+      </if>
+      <if test="wepayQr != null">
+        #{wepayQr,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatOfficalLink != null">
+        #{wechatOfficalLink,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatGroupQr != null">
+        #{wechatGroupQr,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="organizerName != null">
+        #{organizerName,jdbcType=VARCHAR},
+      </if>
+      <if test="organizerWechat != null">
+        #{organizerWechat,jdbcType=VARCHAR},
+      </if>
+      <if test="organizerPhone != null">
+        #{organizerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryStatus != null">
+        #{factoryStatus,jdbcType=INTEGER},
+      </if>
+      <if test="activityDesc != null">
+        #{activityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="participantLimit != null">
+        #{participantLimit,jdbcType=INTEGER},
+      </if>
+      <if test="start != null">
+        #{start,jdbcType=TIMESTAMP},
+      </if>
+      <if test="end != null">
+        #{end,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.macro.meedog.model.ActivityExample" resultType="java.lang.Long">
+    select count(*) from activity
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update activity
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.placeId != null">
+        place_id = #{record.placeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.usid != null">
+        usid = #{record.usid,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userNickName != null">
+        user_nick_name = #{record.userNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userIcon != null">
+        user_icon = #{record.userIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alipayQr != null">
+        alipay_QR = #{record.alipayQr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wepayQr != null">
+        wepay_QR = #{record.wepayQr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechatOfficalLink != null">
+        wechat_offical_link = #{record.wechatOfficalLink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechatGroupQr != null">
+        wechat_group_QR = #{record.wechatGroupQr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organizerName != null">
+        organizer_name = #{record.organizerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organizerWechat != null">
+        organizer_wechat = #{record.organizerWechat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organizerPhone != null">
+        organizer_phone = #{record.organizerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.factoryStatus != null">
+        factory_status = #{record.factoryStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.activityDesc != null">
+        activity_desc = #{record.activityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.participantLimit != null">
+        participant_limit = #{record.participantLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.start != null">
+        start = #{record.start,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.end != null">
+        end = #{record.end,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedTime != null">
+        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update activity
+    set id = #{record.id,jdbcType=BIGINT},
+      place_id = #{record.placeId,jdbcType=BIGINT},
+      usid = #{record.usid,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=BIGINT},
+      user_nick_name = #{record.userNickName,jdbcType=VARCHAR},
+      user_icon = #{record.userIcon,jdbcType=VARCHAR},
+      alipay_QR = #{record.alipayQr,jdbcType=VARCHAR},
+      wepay_QR = #{record.wepayQr,jdbcType=VARCHAR},
+      wechat_offical_link = #{record.wechatOfficalLink,jdbcType=VARCHAR},
+      wechat_group_QR = #{record.wechatGroupQr,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      organizer_name = #{record.organizerName,jdbcType=VARCHAR},
+      organizer_wechat = #{record.organizerWechat,jdbcType=VARCHAR},
+      organizer_phone = #{record.organizerPhone,jdbcType=VARCHAR},
+      factory_status = #{record.factoryStatus,jdbcType=INTEGER},
+      activity_desc = #{record.activityDesc,jdbcType=VARCHAR},
+      participant_limit = #{record.participantLimit,jdbcType=INTEGER},
+      start = #{record.start,jdbcType=TIMESTAMP},
+      end = #{record.end,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.macro.meedog.model.Activity">
+    update activity
+    <set>
+      <if test="placeId != null">
+        place_id = #{placeId,jdbcType=BIGINT},
+      </if>
+      <if test="usid != null">
+        usid = #{usid,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="userNickName != null">
+        user_nick_name = #{userNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="userIcon != null">
+        user_icon = #{userIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayQr != null">
+        alipay_QR = #{alipayQr,jdbcType=VARCHAR},
+      </if>
+      <if test="wepayQr != null">
+        wepay_QR = #{wepayQr,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatOfficalLink != null">
+        wechat_offical_link = #{wechatOfficalLink,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatGroupQr != null">
+        wechat_group_QR = #{wechatGroupQr,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="organizerName != null">
+        organizer_name = #{organizerName,jdbcType=VARCHAR},
+      </if>
+      <if test="organizerWechat != null">
+        organizer_wechat = #{organizerWechat,jdbcType=VARCHAR},
+      </if>
+      <if test="organizerPhone != null">
+        organizer_phone = #{organizerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryStatus != null">
+        factory_status = #{factoryStatus,jdbcType=INTEGER},
+      </if>
+      <if test="activityDesc != null">
+        activity_desc = #{activityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="participantLimit != null">
+        participant_limit = #{participantLimit,jdbcType=INTEGER},
+      </if>
+      <if test="start != null">
+        start = #{start,jdbcType=TIMESTAMP},
+      </if>
+      <if test="end != null">
+        end = #{end,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.macro.meedog.model.Activity">
+    update activity
+    set place_id = #{placeId,jdbcType=BIGINT},
+      usid = #{usid,jdbcType=BIGINT},
+      uid = #{uid,jdbcType=BIGINT},
+      user_nick_name = #{userNickName,jdbcType=VARCHAR},
+      user_icon = #{userIcon,jdbcType=VARCHAR},
+      alipay_QR = #{alipayQr,jdbcType=VARCHAR},
+      wepay_QR = #{wepayQr,jdbcType=VARCHAR},
+      wechat_offical_link = #{wechatOfficalLink,jdbcType=VARCHAR},
+      wechat_group_QR = #{wechatGroupQr,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      organizer_name = #{organizerName,jdbcType=VARCHAR},
+      organizer_wechat = #{organizerWechat,jdbcType=VARCHAR},
+      organizer_phone = #{organizerPhone,jdbcType=VARCHAR},
+      factory_status = #{factoryStatus,jdbcType=INTEGER},
+      activity_desc = #{activityDesc,jdbcType=VARCHAR},
+      participant_limit = #{participantLimit,jdbcType=INTEGER},
+      start = #{start,jdbcType=TIMESTAMP},
+      end = #{end,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,1278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.meedog.mapper.WorldUniversityMapper">
+  <resultMap id="BaseResultMap" type="com.macro.meedog.model.WorldUniversity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="country_id" jdbcType="BIGINT" property="countryId" />
+    <result column="country_name" jdbcType="VARCHAR" property="countryName" />
+    <result column="en_country_name" jdbcType="VARCHAR" property="enCountryName" />
+    <result column="country_rank" jdbcType="INTEGER" property="countryRank" />
+    <result column="world_rank" jdbcType="INTEGER" property="worldRank" />
+    <result column="english_full_name" jdbcType="VARCHAR" property="englishFullName" />
+    <result column="alter_english_name" jdbcType="VARCHAR" property="alterEnglishName" />
+    <result column="chinese_name" jdbcType="VARCHAR" property="chineseName" />
+    <result column="acronym" jdbcType="VARCHAR" property="acronym" />
+    <result column="logo" jdbcType="VARCHAR" property="logo" />
+    <result column="website" jdbcType="VARCHAR" property="website" />
+    <result column="founded" jdbcType="VARCHAR" property="founded" />
+    <result column="motto" jdbcType="VARCHAR" property="motto" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="postcode" jdbcType="VARCHAR" property="postcode" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="fax" jdbcType="VARCHAR" property="fax" />
+    <result column="is211" jdbcType="INTEGER" property="is211" />
+    <result column="is985" jdbcType="INTEGER" property="is985" />
+    <result column="independent_recruit" jdbcType="INTEGER" property="independentRecruit" />
+    <result column="is_graduate_school" jdbcType="INTEGER" property="isGraduateSchool" />
+    <result column="key_discipline_count" jdbcType="INTEGER" property="keyDisciplineCount" />
+    <result column="subordinate" jdbcType="VARCHAR" property="subordinate" />
+    <result column="doc_program_count" jdbcType="INTEGER" property="docProgramCount" />
+    <result column="master_program_count" jdbcType="INTEGER" property="masterProgramCount" />
+    <result column="academician_count" jdbcType="INTEGER" property="academicianCount" />
+    <result column="recruit_phone" jdbcType="VARCHAR" property="recruitPhone" />
+    <result column="male_percentage" jdbcType="VARCHAR" property="malePercentage" />
+    <result column="female_percentage" jdbcType="VARCHAR" property="femalePercentage" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="recruit_website" jdbcType="VARCHAR" property="recruitWebsite" />
+    <result column="recruit_address" jdbcType="VARCHAR" property="recruitAddress" />
+    <result column="qs_rank" jdbcType="INTEGER" property="qsRank" />
+    <result column="location" jdbcType="OTHER" property="location" typeHandler="com.macro.meedog.common.geo.MysqlGeoPointTypeHandler" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="street_address" jdbcType="VARCHAR" property="streetAddress" />
+    <result column="address_locality" jdbcType="VARCHAR" property="addressLocality" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+    <result column="region_id" jdbcType="BIGINT" property="regionId" />
+    <result column="city_id" jdbcType="BIGINT" property="cityId" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="crawl_link" jdbcType="VARCHAR" property="crawlLink" />
+    <result column="local_student_undergraduate" jdbcType="VARCHAR" property="localStudentUndergraduate" />
+    <result column="inter_student_undergraduate" jdbcType="VARCHAR" property="interStudentUndergraduate" />
+    <result column="local_student_postgraduate" jdbcType="VARCHAR" property="localStudentPostgraduate" />
+    <result column="inter_student_postgraduate" jdbcType="VARCHAR" property="interStudentPostgraduate" />
+    <result column="student_enrollment" jdbcType="VARCHAR" property="studentEnrollment" />
+    <result column="academic_staff" jdbcType="VARCHAR" property="academicStaff" />
+    <result column="academic_type" jdbcType="VARCHAR" property="academicType" />
+    <result column="control_type" jdbcType="VARCHAR" property="controlType" />
+    <result column="entity_type" jdbcType="VARCHAR" property="entityType" />
+    <result column="pics" jdbcType="VARCHAR" property="pics" />
+    <result column="digit_code" jdbcType="INTEGER" property="digitCode" />
+    <result column="fb" jdbcType="VARCHAR" property="fb" />
+    <result column="fb_link" jdbcType="VARCHAR" property="fbLink" />
+    <result column="tw" jdbcType="VARCHAR" property="tw" />
+    <result column="tw_link" jdbcType="VARCHAR" property="twLink" />
+    <result column="ln" jdbcType="VARCHAR" property="ln" />
+    <result column="ln_link" jdbcType="VARCHAR" property="lnLink" />
+    <result column="ytb" jdbcType="VARCHAR" property="ytb" />
+    <result column="ytb_link" jdbcType="VARCHAR" property="ytbLink" />
+    <result column="ins" jdbcType="VARCHAR" property="ins" />
+    <result column="ins_link" jdbcType="VARCHAR" property="insLink" />
+    <result column="wiki" jdbcType="VARCHAR" property="wiki" />
+    <result column="wiki_link" jdbcType="VARCHAR" property="wikiLink" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.locationCriteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler} and #{criterion.secondValue,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.locationCriteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler} and #{criterion.secondValue,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, country_id, country_name, en_country_name, country_rank, world_rank, english_full_name, 
+    alter_english_name, chinese_name, acronym, logo, website, founded, motto, introduction, 
+    postcode, telephone, type, fax, is211, is985, independent_recruit, is_graduate_school, 
+    key_discipline_count, subordinate, doc_program_count, master_program_count, academician_count, 
+    recruit_phone, male_percentage, female_percentage, email, recruit_website, recruit_address, 
+    qs_rank, location, address, street_address, address_locality, region, region_id, 
+    city_id, city, crawl_link, local_student_undergraduate, inter_student_undergraduate, 
+    local_student_postgraduate, inter_student_postgraduate, student_enrollment, academic_staff, 
+    academic_type, control_type, entity_type, pics, digit_code, fb, fb_link, tw, tw_link, 
+    ln, ln_link, ytb, ytb_link, ins, ins_link, wiki, wiki_link, status, create_time, 
+    modified_time
+  </sql>
+  <select id="selectByExample" parameterType="com.macro.meedog.model.WorldUniversityExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from world_university
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from world_university
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from world_university
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.macro.meedog.model.WorldUniversityExample">
+    delete from world_university
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.macro.meedog.model.WorldUniversity">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into world_university (country_id, country_name, en_country_name, 
+      country_rank, world_rank, english_full_name, 
+      alter_english_name, chinese_name, acronym, 
+      logo, website, founded, 
+      motto, introduction, postcode, 
+      telephone, type, fax, 
+      is211, is985, independent_recruit, 
+      is_graduate_school, key_discipline_count, subordinate, 
+      doc_program_count, master_program_count, academician_count, 
+      recruit_phone, male_percentage, female_percentage, 
+      email, recruit_website, recruit_address, 
+      qs_rank, location, 
+      address, street_address, address_locality, 
+      region, region_id, city_id, 
+      city, crawl_link, local_student_undergraduate, 
+      inter_student_undergraduate, local_student_postgraduate, 
+      inter_student_postgraduate, student_enrollment, 
+      academic_staff, academic_type, control_type, 
+      entity_type, pics, digit_code, 
+      fb, fb_link, tw, tw_link, 
+      ln, ln_link, ytb, ytb_link, 
+      ins, ins_link, wiki, 
+      wiki_link, status, create_time, 
+      modified_time)
+    values (#{countryId,jdbcType=BIGINT}, #{countryName,jdbcType=VARCHAR}, #{enCountryName,jdbcType=VARCHAR}, 
+      #{countryRank,jdbcType=INTEGER}, #{worldRank,jdbcType=INTEGER}, #{englishFullName,jdbcType=VARCHAR}, 
+      #{alterEnglishName,jdbcType=VARCHAR}, #{chineseName,jdbcType=VARCHAR}, #{acronym,jdbcType=VARCHAR}, 
+      #{logo,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, #{founded,jdbcType=VARCHAR}, 
+      #{motto,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{fax,jdbcType=VARCHAR}, 
+      #{is211,jdbcType=INTEGER}, #{is985,jdbcType=INTEGER}, #{independentRecruit,jdbcType=INTEGER}, 
+      #{isGraduateSchool,jdbcType=INTEGER}, #{keyDisciplineCount,jdbcType=INTEGER}, #{subordinate,jdbcType=VARCHAR}, 
+      #{docProgramCount,jdbcType=INTEGER}, #{masterProgramCount,jdbcType=INTEGER}, #{academicianCount,jdbcType=INTEGER}, 
+      #{recruitPhone,jdbcType=VARCHAR}, #{malePercentage,jdbcType=VARCHAR}, #{femalePercentage,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{recruitWebsite,jdbcType=VARCHAR}, #{recruitAddress,jdbcType=VARCHAR}, 
+      #{qsRank,jdbcType=INTEGER}, #{location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}, 
+      #{address,jdbcType=VARCHAR}, #{streetAddress,jdbcType=VARCHAR}, #{addressLocality,jdbcType=VARCHAR}, 
+      #{region,jdbcType=VARCHAR}, #{regionId,jdbcType=BIGINT}, #{cityId,jdbcType=BIGINT}, 
+      #{city,jdbcType=VARCHAR}, #{crawlLink,jdbcType=VARCHAR}, #{localStudentUndergraduate,jdbcType=VARCHAR}, 
+      #{interStudentUndergraduate,jdbcType=VARCHAR}, #{localStudentPostgraduate,jdbcType=VARCHAR}, 
+      #{interStudentPostgraduate,jdbcType=VARCHAR}, #{studentEnrollment,jdbcType=VARCHAR}, 
+      #{academicStaff,jdbcType=VARCHAR}, #{academicType,jdbcType=VARCHAR}, #{controlType,jdbcType=VARCHAR}, 
+      #{entityType,jdbcType=VARCHAR}, #{pics,jdbcType=VARCHAR}, #{digitCode,jdbcType=INTEGER}, 
+      #{fb,jdbcType=VARCHAR}, #{fbLink,jdbcType=VARCHAR}, #{tw,jdbcType=VARCHAR}, #{twLink,jdbcType=VARCHAR}, 
+      #{ln,jdbcType=VARCHAR}, #{lnLink,jdbcType=VARCHAR}, #{ytb,jdbcType=VARCHAR}, #{ytbLink,jdbcType=VARCHAR}, 
+      #{ins,jdbcType=VARCHAR}, #{insLink,jdbcType=VARCHAR}, #{wiki,jdbcType=VARCHAR}, 
+      #{wikiLink,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifiedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.macro.meedog.model.WorldUniversity">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into world_university
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="countryId != null">
+        country_id,
+      </if>
+      <if test="countryName != null">
+        country_name,
+      </if>
+      <if test="enCountryName != null">
+        en_country_name,
+      </if>
+      <if test="countryRank != null">
+        country_rank,
+      </if>
+      <if test="worldRank != null">
+        world_rank,
+      </if>
+      <if test="englishFullName != null">
+        english_full_name,
+      </if>
+      <if test="alterEnglishName != null">
+        alter_english_name,
+      </if>
+      <if test="chineseName != null">
+        chinese_name,
+      </if>
+      <if test="acronym != null">
+        acronym,
+      </if>
+      <if test="logo != null">
+        logo,
+      </if>
+      <if test="website != null">
+        website,
+      </if>
+      <if test="founded != null">
+        founded,
+      </if>
+      <if test="motto != null">
+        motto,
+      </if>
+      <if test="introduction != null">
+        introduction,
+      </if>
+      <if test="postcode != null">
+        postcode,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="fax != null">
+        fax,
+      </if>
+      <if test="is211 != null">
+        is211,
+      </if>
+      <if test="is985 != null">
+        is985,
+      </if>
+      <if test="independentRecruit != null">
+        independent_recruit,
+      </if>
+      <if test="isGraduateSchool != null">
+        is_graduate_school,
+      </if>
+      <if test="keyDisciplineCount != null">
+        key_discipline_count,
+      </if>
+      <if test="subordinate != null">
+        subordinate,
+      </if>
+      <if test="docProgramCount != null">
+        doc_program_count,
+      </if>
+      <if test="masterProgramCount != null">
+        master_program_count,
+      </if>
+      <if test="academicianCount != null">
+        academician_count,
+      </if>
+      <if test="recruitPhone != null">
+        recruit_phone,
+      </if>
+      <if test="malePercentage != null">
+        male_percentage,
+      </if>
+      <if test="femalePercentage != null">
+        female_percentage,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="recruitWebsite != null">
+        recruit_website,
+      </if>
+      <if test="recruitAddress != null">
+        recruit_address,
+      </if>
+      <if test="qsRank != null">
+        qs_rank,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="streetAddress != null">
+        street_address,
+      </if>
+      <if test="addressLocality != null">
+        address_locality,
+      </if>
+      <if test="region != null">
+        region,
+      </if>
+      <if test="regionId != null">
+        region_id,
+      </if>
+      <if test="cityId != null">
+        city_id,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="crawlLink != null">
+        crawl_link,
+      </if>
+      <if test="localStudentUndergraduate != null">
+        local_student_undergraduate,
+      </if>
+      <if test="interStudentUndergraduate != null">
+        inter_student_undergraduate,
+      </if>
+      <if test="localStudentPostgraduate != null">
+        local_student_postgraduate,
+      </if>
+      <if test="interStudentPostgraduate != null">
+        inter_student_postgraduate,
+      </if>
+      <if test="studentEnrollment != null">
+        student_enrollment,
+      </if>
+      <if test="academicStaff != null">
+        academic_staff,
+      </if>
+      <if test="academicType != null">
+        academic_type,
+      </if>
+      <if test="controlType != null">
+        control_type,
+      </if>
+      <if test="entityType != null">
+        entity_type,
+      </if>
+      <if test="pics != null">
+        pics,
+      </if>
+      <if test="digitCode != null">
+        digit_code,
+      </if>
+      <if test="fb != null">
+        fb,
+      </if>
+      <if test="fbLink != null">
+        fb_link,
+      </if>
+      <if test="tw != null">
+        tw,
+      </if>
+      <if test="twLink != null">
+        tw_link,
+      </if>
+      <if test="ln != null">
+        ln,
+      </if>
+      <if test="lnLink != null">
+        ln_link,
+      </if>
+      <if test="ytb != null">
+        ytb,
+      </if>
+      <if test="ytbLink != null">
+        ytb_link,
+      </if>
+      <if test="ins != null">
+        ins,
+      </if>
+      <if test="insLink != null">
+        ins_link,
+      </if>
+      <if test="wiki != null">
+        wiki,
+      </if>
+      <if test="wikiLink != null">
+        wiki_link,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifiedTime != null">
+        modified_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="countryId != null">
+        #{countryId,jdbcType=BIGINT},
+      </if>
+      <if test="countryName != null">
+        #{countryName,jdbcType=VARCHAR},
+      </if>
+      <if test="enCountryName != null">
+        #{enCountryName,jdbcType=VARCHAR},
+      </if>
+      <if test="countryRank != null">
+        #{countryRank,jdbcType=INTEGER},
+      </if>
+      <if test="worldRank != null">
+        #{worldRank,jdbcType=INTEGER},
+      </if>
+      <if test="englishFullName != null">
+        #{englishFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="alterEnglishName != null">
+        #{alterEnglishName,jdbcType=VARCHAR},
+      </if>
+      <if test="chineseName != null">
+        #{chineseName,jdbcType=VARCHAR},
+      </if>
+      <if test="acronym != null">
+        #{acronym,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null">
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null">
+        #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="founded != null">
+        #{founded,jdbcType=VARCHAR},
+      </if>
+      <if test="motto != null">
+        #{motto,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null">
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="fax != null">
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="is211 != null">
+        #{is211,jdbcType=INTEGER},
+      </if>
+      <if test="is985 != null">
+        #{is985,jdbcType=INTEGER},
+      </if>
+      <if test="independentRecruit != null">
+        #{independentRecruit,jdbcType=INTEGER},
+      </if>
+      <if test="isGraduateSchool != null">
+        #{isGraduateSchool,jdbcType=INTEGER},
+      </if>
+      <if test="keyDisciplineCount != null">
+        #{keyDisciplineCount,jdbcType=INTEGER},
+      </if>
+      <if test="subordinate != null">
+        #{subordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="docProgramCount != null">
+        #{docProgramCount,jdbcType=INTEGER},
+      </if>
+      <if test="masterProgramCount != null">
+        #{masterProgramCount,jdbcType=INTEGER},
+      </if>
+      <if test="academicianCount != null">
+        #{academicianCount,jdbcType=INTEGER},
+      </if>
+      <if test="recruitPhone != null">
+        #{recruitPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="malePercentage != null">
+        #{malePercentage,jdbcType=VARCHAR},
+      </if>
+      <if test="femalePercentage != null">
+        #{femalePercentage,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitWebsite != null">
+        #{recruitWebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitAddress != null">
+        #{recruitAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="qsRank != null">
+        #{qsRank,jdbcType=INTEGER},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="streetAddress != null">
+        #{streetAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="addressLocality != null">
+        #{addressLocality,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+        #{regionId,jdbcType=BIGINT},
+      </if>
+      <if test="cityId != null">
+        #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="crawlLink != null">
+        #{crawlLink,jdbcType=VARCHAR},
+      </if>
+      <if test="localStudentUndergraduate != null">
+        #{localStudentUndergraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="interStudentUndergraduate != null">
+        #{interStudentUndergraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="localStudentPostgraduate != null">
+        #{localStudentPostgraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="interStudentPostgraduate != null">
+        #{interStudentPostgraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="studentEnrollment != null">
+        #{studentEnrollment,jdbcType=VARCHAR},
+      </if>
+      <if test="academicStaff != null">
+        #{academicStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="academicType != null">
+        #{academicType,jdbcType=VARCHAR},
+      </if>
+      <if test="controlType != null">
+        #{controlType,jdbcType=VARCHAR},
+      </if>
+      <if test="entityType != null">
+        #{entityType,jdbcType=VARCHAR},
+      </if>
+      <if test="pics != null">
+        #{pics,jdbcType=VARCHAR},
+      </if>
+      <if test="digitCode != null">
+        #{digitCode,jdbcType=INTEGER},
+      </if>
+      <if test="fb != null">
+        #{fb,jdbcType=VARCHAR},
+      </if>
+      <if test="fbLink != null">
+        #{fbLink,jdbcType=VARCHAR},
+      </if>
+      <if test="tw != null">
+        #{tw,jdbcType=VARCHAR},
+      </if>
+      <if test="twLink != null">
+        #{twLink,jdbcType=VARCHAR},
+      </if>
+      <if test="ln != null">
+        #{ln,jdbcType=VARCHAR},
+      </if>
+      <if test="lnLink != null">
+        #{lnLink,jdbcType=VARCHAR},
+      </if>
+      <if test="ytb != null">
+        #{ytb,jdbcType=VARCHAR},
+      </if>
+      <if test="ytbLink != null">
+        #{ytbLink,jdbcType=VARCHAR},
+      </if>
+      <if test="ins != null">
+        #{ins,jdbcType=VARCHAR},
+      </if>
+      <if test="insLink != null">
+        #{insLink,jdbcType=VARCHAR},
+      </if>
+      <if test="wiki != null">
+        #{wiki,jdbcType=VARCHAR},
+      </if>
+      <if test="wikiLink != null">
+        #{wikiLink,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.macro.meedog.model.WorldUniversityExample" resultType="java.lang.Long">
+    select count(*) from world_university
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update world_university
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.countryId != null">
+        country_id = #{record.countryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.countryName != null">
+        country_name = #{record.countryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enCountryName != null">
+        en_country_name = #{record.enCountryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.countryRank != null">
+        country_rank = #{record.countryRank,jdbcType=INTEGER},
+      </if>
+      <if test="record.worldRank != null">
+        world_rank = #{record.worldRank,jdbcType=INTEGER},
+      </if>
+      <if test="record.englishFullName != null">
+        english_full_name = #{record.englishFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alterEnglishName != null">
+        alter_english_name = #{record.alterEnglishName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chineseName != null">
+        chinese_name = #{record.chineseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acronym != null">
+        acronym = #{record.acronym,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logo != null">
+        logo = #{record.logo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.website != null">
+        website = #{record.website,jdbcType=VARCHAR},
+      </if>
+      <if test="record.founded != null">
+        founded = #{record.founded,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motto != null">
+        motto = #{record.motto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.introduction != null">
+        introduction = #{record.introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postcode != null">
+        postcode = #{record.postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null">
+        telephone = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.fax != null">
+        fax = #{record.fax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.is211 != null">
+        is211 = #{record.is211,jdbcType=INTEGER},
+      </if>
+      <if test="record.is985 != null">
+        is985 = #{record.is985,jdbcType=INTEGER},
+      </if>
+      <if test="record.independentRecruit != null">
+        independent_recruit = #{record.independentRecruit,jdbcType=INTEGER},
+      </if>
+      <if test="record.isGraduateSchool != null">
+        is_graduate_school = #{record.isGraduateSchool,jdbcType=INTEGER},
+      </if>
+      <if test="record.keyDisciplineCount != null">
+        key_discipline_count = #{record.keyDisciplineCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.subordinate != null">
+        subordinate = #{record.subordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docProgramCount != null">
+        doc_program_count = #{record.docProgramCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.masterProgramCount != null">
+        master_program_count = #{record.masterProgramCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.academicianCount != null">
+        academician_count = #{record.academicianCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.recruitPhone != null">
+        recruit_phone = #{record.recruitPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.malePercentage != null">
+        male_percentage = #{record.malePercentage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.femalePercentage != null">
+        female_percentage = #{record.femalePercentage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitWebsite != null">
+        recruit_website = #{record.recruitWebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitAddress != null">
+        recruit_address = #{record.recruitAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qsRank != null">
+        qs_rank = #{record.qsRank,jdbcType=INTEGER},
+      </if>
+      <if test="record.location != null">
+        location = #{record.location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.streetAddress != null">
+        street_address = #{record.streetAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressLocality != null">
+        address_locality = #{record.addressLocality,jdbcType=VARCHAR},
+      </if>
+      <if test="record.region != null">
+        region = #{record.region,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionId != null">
+        region_id = #{record.regionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cityId != null">
+        city_id = #{record.cityId,jdbcType=BIGINT},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crawlLink != null">
+        crawl_link = #{record.crawlLink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.localStudentUndergraduate != null">
+        local_student_undergraduate = #{record.localStudentUndergraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interStudentUndergraduate != null">
+        inter_student_undergraduate = #{record.interStudentUndergraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.localStudentPostgraduate != null">
+        local_student_postgraduate = #{record.localStudentPostgraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interStudentPostgraduate != null">
+        inter_student_postgraduate = #{record.interStudentPostgraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentEnrollment != null">
+        student_enrollment = #{record.studentEnrollment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.academicStaff != null">
+        academic_staff = #{record.academicStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="record.academicType != null">
+        academic_type = #{record.academicType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.controlType != null">
+        control_type = #{record.controlType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.entityType != null">
+        entity_type = #{record.entityType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pics != null">
+        pics = #{record.pics,jdbcType=VARCHAR},
+      </if>
+      <if test="record.digitCode != null">
+        digit_code = #{record.digitCode,jdbcType=INTEGER},
+      </if>
+      <if test="record.fb != null">
+        fb = #{record.fb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fbLink != null">
+        fb_link = #{record.fbLink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tw != null">
+        tw = #{record.tw,jdbcType=VARCHAR},
+      </if>
+      <if test="record.twLink != null">
+        tw_link = #{record.twLink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ln != null">
+        ln = #{record.ln,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lnLink != null">
+        ln_link = #{record.lnLink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ytb != null">
+        ytb = #{record.ytb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ytbLink != null">
+        ytb_link = #{record.ytbLink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ins != null">
+        ins = #{record.ins,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insLink != null">
+        ins_link = #{record.insLink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wiki != null">
+        wiki = #{record.wiki,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wikiLink != null">
+        wiki_link = #{record.wikiLink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedTime != null">
+        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update world_university
+    set id = #{record.id,jdbcType=BIGINT},
+      country_id = #{record.countryId,jdbcType=BIGINT},
+      country_name = #{record.countryName,jdbcType=VARCHAR},
+      en_country_name = #{record.enCountryName,jdbcType=VARCHAR},
+      country_rank = #{record.countryRank,jdbcType=INTEGER},
+      world_rank = #{record.worldRank,jdbcType=INTEGER},
+      english_full_name = #{record.englishFullName,jdbcType=VARCHAR},
+      alter_english_name = #{record.alterEnglishName,jdbcType=VARCHAR},
+      chinese_name = #{record.chineseName,jdbcType=VARCHAR},
+      acronym = #{record.acronym,jdbcType=VARCHAR},
+      logo = #{record.logo,jdbcType=VARCHAR},
+      website = #{record.website,jdbcType=VARCHAR},
+      founded = #{record.founded,jdbcType=VARCHAR},
+      motto = #{record.motto,jdbcType=VARCHAR},
+      introduction = #{record.introduction,jdbcType=VARCHAR},
+      postcode = #{record.postcode,jdbcType=VARCHAR},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      fax = #{record.fax,jdbcType=VARCHAR},
+      is211 = #{record.is211,jdbcType=INTEGER},
+      is985 = #{record.is985,jdbcType=INTEGER},
+      independent_recruit = #{record.independentRecruit,jdbcType=INTEGER},
+      is_graduate_school = #{record.isGraduateSchool,jdbcType=INTEGER},
+      key_discipline_count = #{record.keyDisciplineCount,jdbcType=INTEGER},
+      subordinate = #{record.subordinate,jdbcType=VARCHAR},
+      doc_program_count = #{record.docProgramCount,jdbcType=INTEGER},
+      master_program_count = #{record.masterProgramCount,jdbcType=INTEGER},
+      academician_count = #{record.academicianCount,jdbcType=INTEGER},
+      recruit_phone = #{record.recruitPhone,jdbcType=VARCHAR},
+      male_percentage = #{record.malePercentage,jdbcType=VARCHAR},
+      female_percentage = #{record.femalePercentage,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      recruit_website = #{record.recruitWebsite,jdbcType=VARCHAR},
+      recruit_address = #{record.recruitAddress,jdbcType=VARCHAR},
+      qs_rank = #{record.qsRank,jdbcType=INTEGER},
+      location = #{record.location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler},
+      address = #{record.address,jdbcType=VARCHAR},
+      street_address = #{record.streetAddress,jdbcType=VARCHAR},
+      address_locality = #{record.addressLocality,jdbcType=VARCHAR},
+      region = #{record.region,jdbcType=VARCHAR},
+      region_id = #{record.regionId,jdbcType=BIGINT},
+      city_id = #{record.cityId,jdbcType=BIGINT},
+      city = #{record.city,jdbcType=VARCHAR},
+      crawl_link = #{record.crawlLink,jdbcType=VARCHAR},
+      local_student_undergraduate = #{record.localStudentUndergraduate,jdbcType=VARCHAR},
+      inter_student_undergraduate = #{record.interStudentUndergraduate,jdbcType=VARCHAR},
+      local_student_postgraduate = #{record.localStudentPostgraduate,jdbcType=VARCHAR},
+      inter_student_postgraduate = #{record.interStudentPostgraduate,jdbcType=VARCHAR},
+      student_enrollment = #{record.studentEnrollment,jdbcType=VARCHAR},
+      academic_staff = #{record.academicStaff,jdbcType=VARCHAR},
+      academic_type = #{record.academicType,jdbcType=VARCHAR},
+      control_type = #{record.controlType,jdbcType=VARCHAR},
+      entity_type = #{record.entityType,jdbcType=VARCHAR},
+      pics = #{record.pics,jdbcType=VARCHAR},
+      digit_code = #{record.digitCode,jdbcType=INTEGER},
+      fb = #{record.fb,jdbcType=VARCHAR},
+      fb_link = #{record.fbLink,jdbcType=VARCHAR},
+      tw = #{record.tw,jdbcType=VARCHAR},
+      tw_link = #{record.twLink,jdbcType=VARCHAR},
+      ln = #{record.ln,jdbcType=VARCHAR},
+      ln_link = #{record.lnLink,jdbcType=VARCHAR},
+      ytb = #{record.ytb,jdbcType=VARCHAR},
+      ytb_link = #{record.ytbLink,jdbcType=VARCHAR},
+      ins = #{record.ins,jdbcType=VARCHAR},
+      ins_link = #{record.insLink,jdbcType=VARCHAR},
+      wiki = #{record.wiki,jdbcType=VARCHAR},
+      wiki_link = #{record.wikiLink,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.macro.meedog.model.WorldUniversity">
+    update world_university
+    <set>
+      <if test="countryId != null">
+        country_id = #{countryId,jdbcType=BIGINT},
+      </if>
+      <if test="countryName != null">
+        country_name = #{countryName,jdbcType=VARCHAR},
+      </if>
+      <if test="enCountryName != null">
+        en_country_name = #{enCountryName,jdbcType=VARCHAR},
+      </if>
+      <if test="countryRank != null">
+        country_rank = #{countryRank,jdbcType=INTEGER},
+      </if>
+      <if test="worldRank != null">
+        world_rank = #{worldRank,jdbcType=INTEGER},
+      </if>
+      <if test="englishFullName != null">
+        english_full_name = #{englishFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="alterEnglishName != null">
+        alter_english_name = #{alterEnglishName,jdbcType=VARCHAR},
+      </if>
+      <if test="chineseName != null">
+        chinese_name = #{chineseName,jdbcType=VARCHAR},
+      </if>
+      <if test="acronym != null">
+        acronym = #{acronym,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null">
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null">
+        website = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="founded != null">
+        founded = #{founded,jdbcType=VARCHAR},
+      </if>
+      <if test="motto != null">
+        motto = #{motto,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null">
+        postcode = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="fax != null">
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="is211 != null">
+        is211 = #{is211,jdbcType=INTEGER},
+      </if>
+      <if test="is985 != null">
+        is985 = #{is985,jdbcType=INTEGER},
+      </if>
+      <if test="independentRecruit != null">
+        independent_recruit = #{independentRecruit,jdbcType=INTEGER},
+      </if>
+      <if test="isGraduateSchool != null">
+        is_graduate_school = #{isGraduateSchool,jdbcType=INTEGER},
+      </if>
+      <if test="keyDisciplineCount != null">
+        key_discipline_count = #{keyDisciplineCount,jdbcType=INTEGER},
+      </if>
+      <if test="subordinate != null">
+        subordinate = #{subordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="docProgramCount != null">
+        doc_program_count = #{docProgramCount,jdbcType=INTEGER},
+      </if>
+      <if test="masterProgramCount != null">
+        master_program_count = #{masterProgramCount,jdbcType=INTEGER},
+      </if>
+      <if test="academicianCount != null">
+        academician_count = #{academicianCount,jdbcType=INTEGER},
+      </if>
+      <if test="recruitPhone != null">
+        recruit_phone = #{recruitPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="malePercentage != null">
+        male_percentage = #{malePercentage,jdbcType=VARCHAR},
+      </if>
+      <if test="femalePercentage != null">
+        female_percentage = #{femalePercentage,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitWebsite != null">
+        recruit_website = #{recruitWebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitAddress != null">
+        recruit_address = #{recruitAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="qsRank != null">
+        qs_rank = #{qsRank,jdbcType=INTEGER},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="streetAddress != null">
+        street_address = #{streetAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="addressLocality != null">
+        address_locality = #{addressLocality,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+        region_id = #{regionId,jdbcType=BIGINT},
+      </if>
+      <if test="cityId != null">
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="crawlLink != null">
+        crawl_link = #{crawlLink,jdbcType=VARCHAR},
+      </if>
+      <if test="localStudentUndergraduate != null">
+        local_student_undergraduate = #{localStudentUndergraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="interStudentUndergraduate != null">
+        inter_student_undergraduate = #{interStudentUndergraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="localStudentPostgraduate != null">
+        local_student_postgraduate = #{localStudentPostgraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="interStudentPostgraduate != null">
+        inter_student_postgraduate = #{interStudentPostgraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="studentEnrollment != null">
+        student_enrollment = #{studentEnrollment,jdbcType=VARCHAR},
+      </if>
+      <if test="academicStaff != null">
+        academic_staff = #{academicStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="academicType != null">
+        academic_type = #{academicType,jdbcType=VARCHAR},
+      </if>
+      <if test="controlType != null">
+        control_type = #{controlType,jdbcType=VARCHAR},
+      </if>
+      <if test="entityType != null">
+        entity_type = #{entityType,jdbcType=VARCHAR},
+      </if>
+      <if test="pics != null">
+        pics = #{pics,jdbcType=VARCHAR},
+      </if>
+      <if test="digitCode != null">
+        digit_code = #{digitCode,jdbcType=INTEGER},
+      </if>
+      <if test="fb != null">
+        fb = #{fb,jdbcType=VARCHAR},
+      </if>
+      <if test="fbLink != null">
+        fb_link = #{fbLink,jdbcType=VARCHAR},
+      </if>
+      <if test="tw != null">
+        tw = #{tw,jdbcType=VARCHAR},
+      </if>
+      <if test="twLink != null">
+        tw_link = #{twLink,jdbcType=VARCHAR},
+      </if>
+      <if test="ln != null">
+        ln = #{ln,jdbcType=VARCHAR},
+      </if>
+      <if test="lnLink != null">
+        ln_link = #{lnLink,jdbcType=VARCHAR},
+      </if>
+      <if test="ytb != null">
+        ytb = #{ytb,jdbcType=VARCHAR},
+      </if>
+      <if test="ytbLink != null">
+        ytb_link = #{ytbLink,jdbcType=VARCHAR},
+      </if>
+      <if test="ins != null">
+        ins = #{ins,jdbcType=VARCHAR},
+      </if>
+      <if test="insLink != null">
+        ins_link = #{insLink,jdbcType=VARCHAR},
+      </if>
+      <if test="wiki != null">
+        wiki = #{wiki,jdbcType=VARCHAR},
+      </if>
+      <if test="wikiLink != null">
+        wiki_link = #{wikiLink,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.macro.meedog.model.WorldUniversity">
+    update world_university
+    set country_id = #{countryId,jdbcType=BIGINT},
+      country_name = #{countryName,jdbcType=VARCHAR},
+      en_country_name = #{enCountryName,jdbcType=VARCHAR},
+      country_rank = #{countryRank,jdbcType=INTEGER},
+      world_rank = #{worldRank,jdbcType=INTEGER},
+      english_full_name = #{englishFullName,jdbcType=VARCHAR},
+      alter_english_name = #{alterEnglishName,jdbcType=VARCHAR},
+      chinese_name = #{chineseName,jdbcType=VARCHAR},
+      acronym = #{acronym,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      founded = #{founded,jdbcType=VARCHAR},
+      motto = #{motto,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=VARCHAR},
+      postcode = #{postcode,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      fax = #{fax,jdbcType=VARCHAR},
+      is211 = #{is211,jdbcType=INTEGER},
+      is985 = #{is985,jdbcType=INTEGER},
+      independent_recruit = #{independentRecruit,jdbcType=INTEGER},
+      is_graduate_school = #{isGraduateSchool,jdbcType=INTEGER},
+      key_discipline_count = #{keyDisciplineCount,jdbcType=INTEGER},
+      subordinate = #{subordinate,jdbcType=VARCHAR},
+      doc_program_count = #{docProgramCount,jdbcType=INTEGER},
+      master_program_count = #{masterProgramCount,jdbcType=INTEGER},
+      academician_count = #{academicianCount,jdbcType=INTEGER},
+      recruit_phone = #{recruitPhone,jdbcType=VARCHAR},
+      male_percentage = #{malePercentage,jdbcType=VARCHAR},
+      female_percentage = #{femalePercentage,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      recruit_website = #{recruitWebsite,jdbcType=VARCHAR},
+      recruit_address = #{recruitAddress,jdbcType=VARCHAR},
+      qs_rank = #{qsRank,jdbcType=INTEGER},
+      location = #{location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler},
+      address = #{address,jdbcType=VARCHAR},
+      street_address = #{streetAddress,jdbcType=VARCHAR},
+      address_locality = #{addressLocality,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      region_id = #{regionId,jdbcType=BIGINT},
+      city_id = #{cityId,jdbcType=BIGINT},
+      city = #{city,jdbcType=VARCHAR},
+      crawl_link = #{crawlLink,jdbcType=VARCHAR},
+      local_student_undergraduate = #{localStudentUndergraduate,jdbcType=VARCHAR},
+      inter_student_undergraduate = #{interStudentUndergraduate,jdbcType=VARCHAR},
+      local_student_postgraduate = #{localStudentPostgraduate,jdbcType=VARCHAR},
+      inter_student_postgraduate = #{interStudentPostgraduate,jdbcType=VARCHAR},
+      student_enrollment = #{studentEnrollment,jdbcType=VARCHAR},
+      academic_staff = #{academicStaff,jdbcType=VARCHAR},
+      academic_type = #{academicType,jdbcType=VARCHAR},
+      control_type = #{controlType,jdbcType=VARCHAR},
+      entity_type = #{entityType,jdbcType=VARCHAR},
+      pics = #{pics,jdbcType=VARCHAR},
+      digit_code = #{digitCode,jdbcType=INTEGER},
+      fb = #{fb,jdbcType=VARCHAR},
+      fb_link = #{fbLink,jdbcType=VARCHAR},
+      tw = #{tw,jdbcType=VARCHAR},
+      tw_link = #{twLink,jdbcType=VARCHAR},
+      ln = #{ln,jdbcType=VARCHAR},
+      ln_link = #{lnLink,jdbcType=VARCHAR},
+      ytb = #{ytb,jdbcType=VARCHAR},
+      ytb_link = #{ytbLink,jdbcType=VARCHAR},
+      ins = #{ins,jdbcType=VARCHAR},
+      ins_link = #{insLink,jdbcType=VARCHAR},
+      wiki = #{wiki,jdbcType=VARCHAR},
+      wiki_link = #{wikiLink,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

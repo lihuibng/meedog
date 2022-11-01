@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.meedog.server.dao.HomeDao">
+    <select id="getRecommendUserList" resultMap="com.macro.meedog.mapper.UserMapper.BaseResultMap">
+        SELECT hu.*
+        FROM
+        user hu
+        WHERE
+        hu.recommend_status = 1
+        AND hu.show_status = 1
+        ORDER BY
+        hu.sort DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+    <select id="getNewUserList" resultMap="com.macro.meedog.mapper.UserMapper.BaseResultMap">
+        SELECT hu.*
+        FROM
+        user hu
+        WHERE
+        hu.new_user = 1
+        AND hu.show_status = 1
+        ORDER BY
+        hu.sort DESC
+        LIMIT #{offset}, #{limit};
+    </select>
+    <select id="getAdUserList" resultMap="com.macro.meedog.mapper.UserMapper.BaseResultMap">
+        SELECT hu.*
+        FROM
+        user hu
+        WHERE
+        hu.ad_status = 1
+        AND hu.show_status = 1
+        ORDER BY
+        hu.sort DESC
+        LIMIT #{offset}, #{limit};
+    </select>
+</mapper>

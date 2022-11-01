@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.meedog.server.dao.UserWeiboDao">
+    <select id="getUserWeiboList" resultMap="com.macro.meedog.mapper.UserWeiboMapper.BaseResultMap">
+        SELECT uw.*
+        FROM
+        user_weibo uw
+        WHERE
+        uw.status = 1
+        ORDER BY
+        uw.create_time DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+</mapper>

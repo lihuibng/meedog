@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.meedog.mapper.UserBasicInfoMapper">
+  <resultMap id="BaseResultMap" type="com.macro.meedog.model.UserBasicInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="degree" jdbcType="INTEGER" property="degree" />
+    <result column="pic_id" jdbcType="BIGINT" property="picId" />
+    <result column="marriage_status" jdbcType="INTEGER" property="marriageStatus" />
+    <result column="nation" jdbcType="VARCHAR" property="nation" />
+    <result column="sexual_orientation" jdbcType="INTEGER" property="sexualOrientation" />
+    <result column="sexual_orientation_desc" jdbcType="VARCHAR" property="sexualOrientationDesc" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="birth_country" jdbcType="VARCHAR" property="birthCountry" />
+    <result column="birth_province" jdbcType="VARCHAR" property="birthProvince" />
+    <result column="birth_city" jdbcType="VARCHAR" property="birthCity" />
+    <result column="registered_residence_country" jdbcType="VARCHAR" property="registeredResidenceCountry" />
+    <result column="registered_residence_province" jdbcType="VARCHAR" property="registeredResidenceProvince" />
+    <result column="registered_residence_city" jdbcType="VARCHAR" property="registeredResidenceCity" />
+    <result column="residence_country" jdbcType="VARCHAR" property="residenceCountry" />
+    <result column="residence_province" jdbcType="VARCHAR" property="residenceProvince" />
+    <result column="residence_city" jdbcType="VARCHAR" property="residenceCity" />
+    <result column="zodiac" jdbcType="VARCHAR" property="zodiac" />
+    <result column="constellation" jdbcType="VARCHAR" property="constellation" />
+    <result column="height" jdbcType="INTEGER" property="height" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="bmi" jdbcType="INTEGER" property="bmi" />
+    <result column="facial_attractiveness" jdbcType="INTEGER" property="facialAttractiveness" />
+    <result column="industry" jdbcType="VARCHAR" property="industry" />
+    <result column="job_type" jdbcType="VARCHAR" property="jobType" />
+    <result column="job_proof" jdbcType="VARCHAR" property="jobProof" />
+    <result column="job_question" jdbcType="VARCHAR" property="jobQuestion" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, uid, gender, degree, pic_id, marriage_status, nation, sexual_orientation, sexual_orientation_desc, 
+    birthday, birth_country, birth_province, birth_city, registered_residence_country, 
+    registered_residence_province, registered_residence_city, residence_country, residence_province, 
+    residence_city, zodiac, constellation, height, weight, bmi, facial_attractiveness, 
+    industry, job_type, job_proof, job_question, status, create_time, modified_time
+  </sql>
+  <select id="selectByExample" parameterType="com.macro.meedog.model.UserBasicInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_basic_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_basic_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_basic_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.macro.meedog.model.UserBasicInfoExample">
+    delete from user_basic_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.macro.meedog.model.UserBasicInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_basic_info (uid, gender, degree, 
+      pic_id, marriage_status, nation, 
+      sexual_orientation, sexual_orientation_desc, 
+      birthday, birth_country, birth_province, 
+      birth_city, registered_residence_country, 
+      registered_residence_province, registered_residence_city, 
+      residence_country, residence_province, residence_city, 
+      zodiac, constellation, height, 
+      weight, bmi, facial_attractiveness, 
+      industry, job_type, job_proof, 
+      job_question, status, create_time, 
+      modified_time)
+    values (#{uid,jdbcType=BIGINT}, #{gender,jdbcType=INTEGER}, #{degree,jdbcType=INTEGER}, 
+      #{picId,jdbcType=BIGINT}, #{marriageStatus,jdbcType=INTEGER}, #{nation,jdbcType=VARCHAR}, 
+      #{sexualOrientation,jdbcType=INTEGER}, #{sexualOrientationDesc,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=DATE}, #{birthCountry,jdbcType=VARCHAR}, #{birthProvince,jdbcType=VARCHAR}, 
+      #{birthCity,jdbcType=VARCHAR}, #{registeredResidenceCountry,jdbcType=VARCHAR}, 
+      #{registeredResidenceProvince,jdbcType=VARCHAR}, #{registeredResidenceCity,jdbcType=VARCHAR}, 
+      #{residenceCountry,jdbcType=VARCHAR}, #{residenceProvince,jdbcType=VARCHAR}, #{residenceCity,jdbcType=VARCHAR}, 
+      #{zodiac,jdbcType=VARCHAR}, #{constellation,jdbcType=VARCHAR}, #{height,jdbcType=INTEGER}, 
+      #{weight,jdbcType=INTEGER}, #{bmi,jdbcType=INTEGER}, #{facialAttractiveness,jdbcType=INTEGER}, 
+      #{industry,jdbcType=VARCHAR}, #{jobType,jdbcType=VARCHAR}, #{jobProof,jdbcType=VARCHAR}, 
+      #{jobQuestion,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifiedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.macro.meedog.model.UserBasicInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_basic_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="degree != null">
+        degree,
+      </if>
+      <if test="picId != null">
+        pic_id,
+      </if>
+      <if test="marriageStatus != null">
+        marriage_status,
+      </if>
+      <if test="nation != null">
+        nation,
+      </if>
+      <if test="sexualOrientation != null">
+        sexual_orientation,
+      </if>
+      <if test="sexualOrientationDesc != null">
+        sexual_orientation_desc,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="birthCountry != null">
+        birth_country,
+      </if>
+      <if test="birthProvince != null">
+        birth_province,
+      </if>
+      <if test="birthCity != null">
+        birth_city,
+      </if>
+      <if test="registeredResidenceCountry != null">
+        registered_residence_country,
+      </if>
+      <if test="registeredResidenceProvince != null">
+        registered_residence_province,
+      </if>
+      <if test="registeredResidenceCity != null">
+        registered_residence_city,
+      </if>
+      <if test="residenceCountry != null">
+        residence_country,
+      </if>
+      <if test="residenceProvince != null">
+        residence_province,
+      </if>
+      <if test="residenceCity != null">
+        residence_city,
+      </if>
+      <if test="zodiac != null">
+        zodiac,
+      </if>
+      <if test="constellation != null">
+        constellation,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="bmi != null">
+        bmi,
+      </if>
+      <if test="facialAttractiveness != null">
+        facial_attractiveness,
+      </if>
+      <if test="industry != null">
+        industry,
+      </if>
+      <if test="jobType != null">
+        job_type,
+      </if>
+      <if test="jobProof != null">
+        job_proof,
+      </if>
+      <if test="jobQuestion != null">
+        job_question,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifiedTime != null">
+        modified_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="degree != null">
+        #{degree,jdbcType=INTEGER},
+      </if>
+      <if test="picId != null">
+        #{picId,jdbcType=BIGINT},
+      </if>
+      <if test="marriageStatus != null">
+        #{marriageStatus,jdbcType=INTEGER},
+      </if>
+      <if test="nation != null">
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="sexualOrientation != null">
+        #{sexualOrientation,jdbcType=INTEGER},
+      </if>
+      <if test="sexualOrientationDesc != null">
+        #{sexualOrientationDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="birthCountry != null">
+        #{birthCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="birthProvince != null">
+        #{birthProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="birthCity != null">
+        #{birthCity,jdbcType=VARCHAR},
+      </if>
+      <if test="registeredResidenceCountry != null">
+        #{registeredResidenceCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="registeredResidenceProvince != null">
+        #{registeredResidenceProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="registeredResidenceCity != null">
+        #{registeredResidenceCity,jdbcType=VARCHAR},
+      </if>
+      <if test="residenceCountry != null">
+        #{residenceCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="residenceProvince != null">
+        #{residenceProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="residenceCity != null">
+        #{residenceCity,jdbcType=VARCHAR},
+      </if>
+      <if test="zodiac != null">
+        #{zodiac,jdbcType=VARCHAR},
+      </if>
+      <if test="constellation != null">
+        #{constellation,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="bmi != null">
+        #{bmi,jdbcType=INTEGER},
+      </if>
+      <if test="facialAttractiveness != null">
+        #{facialAttractiveness,jdbcType=INTEGER},
+      </if>
+      <if test="industry != null">
+        #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="jobType != null">
+        #{jobType,jdbcType=VARCHAR},
+      </if>
+      <if test="jobProof != null">
+        #{jobProof,jdbcType=VARCHAR},
+      </if>
+      <if test="jobQuestion != null">
+        #{jobQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.macro.meedog.model.UserBasicInfoExample" resultType="java.lang.Long">
+    select count(*) from user_basic_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_basic_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=INTEGER},
+      </if>
+      <if test="record.degree != null">
+        degree = #{record.degree,jdbcType=INTEGER},
+      </if>
+      <if test="record.picId != null">
+        pic_id = #{record.picId,jdbcType=BIGINT},
+      </if>
+      <if test="record.marriageStatus != null">
+        marriage_status = #{record.marriageStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.nation != null">
+        nation = #{record.nation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sexualOrientation != null">
+        sexual_orientation = #{record.sexualOrientation,jdbcType=INTEGER},
+      </if>
+      <if test="record.sexualOrientationDesc != null">
+        sexual_orientation_desc = #{record.sexualOrientationDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.birthCountry != null">
+        birth_country = #{record.birthCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthProvince != null">
+        birth_province = #{record.birthProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthCity != null">
+        birth_city = #{record.birthCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registeredResidenceCountry != null">
+        registered_residence_country = #{record.registeredResidenceCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registeredResidenceProvince != null">
+        registered_residence_province = #{record.registeredResidenceProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registeredResidenceCity != null">
+        registered_residence_city = #{record.registeredResidenceCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.residenceCountry != null">
+        residence_country = #{record.residenceCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.residenceProvince != null">
+        residence_province = #{record.residenceProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.residenceCity != null">
+        residence_city = #{record.residenceCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zodiac != null">
+        zodiac = #{record.zodiac,jdbcType=VARCHAR},
+      </if>
+      <if test="record.constellation != null">
+        constellation = #{record.constellation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.height != null">
+        height = #{record.height,jdbcType=INTEGER},
+      </if>
+      <if test="record.weight != null">
+        weight = #{record.weight,jdbcType=INTEGER},
+      </if>
+      <if test="record.bmi != null">
+        bmi = #{record.bmi,jdbcType=INTEGER},
+      </if>
+      <if test="record.facialAttractiveness != null">
+        facial_attractiveness = #{record.facialAttractiveness,jdbcType=INTEGER},
+      </if>
+      <if test="record.industry != null">
+        industry = #{record.industry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobType != null">
+        job_type = #{record.jobType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobProof != null">
+        job_proof = #{record.jobProof,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobQuestion != null">
+        job_question = #{record.jobQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedTime != null">
+        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_basic_info
+    set id = #{record.id,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=BIGINT},
+      gender = #{record.gender,jdbcType=INTEGER},
+      degree = #{record.degree,jdbcType=INTEGER},
+      pic_id = #{record.picId,jdbcType=BIGINT},
+      marriage_status = #{record.marriageStatus,jdbcType=INTEGER},
+      nation = #{record.nation,jdbcType=VARCHAR},
+      sexual_orientation = #{record.sexualOrientation,jdbcType=INTEGER},
+      sexual_orientation_desc = #{record.sexualOrientationDesc,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=DATE},
+      birth_country = #{record.birthCountry,jdbcType=VARCHAR},
+      birth_province = #{record.birthProvince,jdbcType=VARCHAR},
+      birth_city = #{record.birthCity,jdbcType=VARCHAR},
+      registered_residence_country = #{record.registeredResidenceCountry,jdbcType=VARCHAR},
+      registered_residence_province = #{record.registeredResidenceProvince,jdbcType=VARCHAR},
+      registered_residence_city = #{record.registeredResidenceCity,jdbcType=VARCHAR},
+      residence_country = #{record.residenceCountry,jdbcType=VARCHAR},
+      residence_province = #{record.residenceProvince,jdbcType=VARCHAR},
+      residence_city = #{record.residenceCity,jdbcType=VARCHAR},
+      zodiac = #{record.zodiac,jdbcType=VARCHAR},
+      constellation = #{record.constellation,jdbcType=VARCHAR},
+      height = #{record.height,jdbcType=INTEGER},
+      weight = #{record.weight,jdbcType=INTEGER},
+      bmi = #{record.bmi,jdbcType=INTEGER},
+      facial_attractiveness = #{record.facialAttractiveness,jdbcType=INTEGER},
+      industry = #{record.industry,jdbcType=VARCHAR},
+      job_type = #{record.jobType,jdbcType=VARCHAR},
+      job_proof = #{record.jobProof,jdbcType=VARCHAR},
+      job_question = #{record.jobQuestion,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.macro.meedog.model.UserBasicInfo">
+    update user_basic_info
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="degree != null">
+        degree = #{degree,jdbcType=INTEGER},
+      </if>
+      <if test="picId != null">
+        pic_id = #{picId,jdbcType=BIGINT},
+      </if>
+      <if test="marriageStatus != null">
+        marriage_status = #{marriageStatus,jdbcType=INTEGER},
+      </if>
+      <if test="nation != null">
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="sexualOrientation != null">
+        sexual_orientation = #{sexualOrientation,jdbcType=INTEGER},
+      </if>
+      <if test="sexualOrientationDesc != null">
+        sexual_orientation_desc = #{sexualOrientationDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="birthCountry != null">
+        birth_country = #{birthCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="birthProvince != null">
+        birth_province = #{birthProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="birthCity != null">
+        birth_city = #{birthCity,jdbcType=VARCHAR},
+      </if>
+      <if test="registeredResidenceCountry != null">
+        registered_residence_country = #{registeredResidenceCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="registeredResidenceProvince != null">
+        registered_residence_province = #{registeredResidenceProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="registeredResidenceCity != null">
+        registered_residence_city = #{registeredResidenceCity,jdbcType=VARCHAR},
+      </if>
+      <if test="residenceCountry != null">
+        residence_country = #{residenceCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="residenceProvince != null">
+        residence_province = #{residenceProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="residenceCity != null">
+        residence_city = #{residenceCity,jdbcType=VARCHAR},
+      </if>
+      <if test="zodiac != null">
+        zodiac = #{zodiac,jdbcType=VARCHAR},
+      </if>
+      <if test="constellation != null">
+        constellation = #{constellation,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="bmi != null">
+        bmi = #{bmi,jdbcType=INTEGER},
+      </if>
+      <if test="facialAttractiveness != null">
+        facial_attractiveness = #{facialAttractiveness,jdbcType=INTEGER},
+      </if>
+      <if test="industry != null">
+        industry = #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="jobType != null">
+        job_type = #{jobType,jdbcType=VARCHAR},
+      </if>
+      <if test="jobProof != null">
+        job_proof = #{jobProof,jdbcType=VARCHAR},
+      </if>
+      <if test="jobQuestion != null">
+        job_question = #{jobQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.macro.meedog.model.UserBasicInfo">
+    update user_basic_info
+    set uid = #{uid,jdbcType=BIGINT},
+      gender = #{gender,jdbcType=INTEGER},
+      degree = #{degree,jdbcType=INTEGER},
+      pic_id = #{picId,jdbcType=BIGINT},
+      marriage_status = #{marriageStatus,jdbcType=INTEGER},
+      nation = #{nation,jdbcType=VARCHAR},
+      sexual_orientation = #{sexualOrientation,jdbcType=INTEGER},
+      sexual_orientation_desc = #{sexualOrientationDesc,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      birth_country = #{birthCountry,jdbcType=VARCHAR},
+      birth_province = #{birthProvince,jdbcType=VARCHAR},
+      birth_city = #{birthCity,jdbcType=VARCHAR},
+      registered_residence_country = #{registeredResidenceCountry,jdbcType=VARCHAR},
+      registered_residence_province = #{registeredResidenceProvince,jdbcType=VARCHAR},
+      registered_residence_city = #{registeredResidenceCity,jdbcType=VARCHAR},
+      residence_country = #{residenceCountry,jdbcType=VARCHAR},
+      residence_province = #{residenceProvince,jdbcType=VARCHAR},
+      residence_city = #{residenceCity,jdbcType=VARCHAR},
+      zodiac = #{zodiac,jdbcType=VARCHAR},
+      constellation = #{constellation,jdbcType=VARCHAR},
+      height = #{height,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=INTEGER},
+      bmi = #{bmi,jdbcType=INTEGER},
+      facial_attractiveness = #{facialAttractiveness,jdbcType=INTEGER},
+      industry = #{industry,jdbcType=VARCHAR},
+      job_type = #{jobType,jdbcType=VARCHAR},
+      job_proof = #{jobProof,jdbcType=VARCHAR},
+      job_question = #{jobQuestion,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

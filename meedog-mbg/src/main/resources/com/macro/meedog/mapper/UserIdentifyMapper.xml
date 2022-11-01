@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.meedog.mapper.UserIdentifyMapper">
+  <resultMap id="BaseResultMap" type="com.macro.meedog.model.UserIdentify">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="family_name" jdbcType="VARCHAR" property="familyName" />
+    <result column="passport" jdbcType="VARCHAR" property="passport" />
+    <result column="id_number" jdbcType="VARCHAR" property="idNumber" />
+    <result column="wechat_credit" jdbcType="INTEGER" property="wechatCredit" />
+    <result column="sesame_credit" jdbcType="INTEGER" property="sesameCredit" />
+    <result column="individual_income_tax" jdbcType="VARCHAR" property="individualIncomeTax" />
+    <result column="alipay_social_security" jdbcType="VARCHAR" property="alipaySocialSecurity" />
+    <result column="degree_diploma" jdbcType="VARCHAR" property="degreeDiploma" />
+    <result column="job" jdbcType="VARCHAR" property="job" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, uid, name, family_name, passport, id_number, wechat_credit, sesame_credit, individual_income_tax, 
+    alipay_social_security, degree_diploma, job, status, create_time, modified_time
+  </sql>
+  <select id="selectByExample" parameterType="com.macro.meedog.model.UserIdentifyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_identify
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_identify
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_identify
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.macro.meedog.model.UserIdentifyExample">
+    delete from user_identify
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.macro.meedog.model.UserIdentify">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_identify (uid, name, family_name, 
+      passport, id_number, wechat_credit, 
+      sesame_credit, individual_income_tax, alipay_social_security, 
+      degree_diploma, job, status, 
+      create_time, modified_time)
+    values (#{uid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{familyName,jdbcType=VARCHAR}, 
+      #{passport,jdbcType=VARCHAR}, #{idNumber,jdbcType=VARCHAR}, #{wechatCredit,jdbcType=INTEGER}, 
+      #{sesameCredit,jdbcType=INTEGER}, #{individualIncomeTax,jdbcType=VARCHAR}, #{alipaySocialSecurity,jdbcType=VARCHAR}, 
+      #{degreeDiploma,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.macro.meedog.model.UserIdentify">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_identify
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="familyName != null">
+        family_name,
+      </if>
+      <if test="passport != null">
+        passport,
+      </if>
+      <if test="idNumber != null">
+        id_number,
+      </if>
+      <if test="wechatCredit != null">
+        wechat_credit,
+      </if>
+      <if test="sesameCredit != null">
+        sesame_credit,
+      </if>
+      <if test="individualIncomeTax != null">
+        individual_income_tax,
+      </if>
+      <if test="alipaySocialSecurity != null">
+        alipay_social_security,
+      </if>
+      <if test="degreeDiploma != null">
+        degree_diploma,
+      </if>
+      <if test="job != null">
+        job,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifiedTime != null">
+        modified_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="familyName != null">
+        #{familyName,jdbcType=VARCHAR},
+      </if>
+      <if test="passport != null">
+        #{passport,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null">
+        #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatCredit != null">
+        #{wechatCredit,jdbcType=INTEGER},
+      </if>
+      <if test="sesameCredit != null">
+        #{sesameCredit,jdbcType=INTEGER},
+      </if>
+      <if test="individualIncomeTax != null">
+        #{individualIncomeTax,jdbcType=VARCHAR},
+      </if>
+      <if test="alipaySocialSecurity != null">
+        #{alipaySocialSecurity,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeDiploma != null">
+        #{degreeDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null">
+        #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.macro.meedog.model.UserIdentifyExample" resultType="java.lang.Long">
+    select count(*) from user_identify
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_identify
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.familyName != null">
+        family_name = #{record.familyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passport != null">
+        passport = #{record.passport,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idNumber != null">
+        id_number = #{record.idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechatCredit != null">
+        wechat_credit = #{record.wechatCredit,jdbcType=INTEGER},
+      </if>
+      <if test="record.sesameCredit != null">
+        sesame_credit = #{record.sesameCredit,jdbcType=INTEGER},
+      </if>
+      <if test="record.individualIncomeTax != null">
+        individual_income_tax = #{record.individualIncomeTax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alipaySocialSecurity != null">
+        alipay_social_security = #{record.alipaySocialSecurity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.degreeDiploma != null">
+        degree_diploma = #{record.degreeDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="record.job != null">
+        job = #{record.job,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedTime != null">
+        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_identify
+    set id = #{record.id,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      family_name = #{record.familyName,jdbcType=VARCHAR},
+      passport = #{record.passport,jdbcType=VARCHAR},
+      id_number = #{record.idNumber,jdbcType=VARCHAR},
+      wechat_credit = #{record.wechatCredit,jdbcType=INTEGER},
+      sesame_credit = #{record.sesameCredit,jdbcType=INTEGER},
+      individual_income_tax = #{record.individualIncomeTax,jdbcType=VARCHAR},
+      alipay_social_security = #{record.alipaySocialSecurity,jdbcType=VARCHAR},
+      degree_diploma = #{record.degreeDiploma,jdbcType=VARCHAR},
+      job = #{record.job,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.macro.meedog.model.UserIdentify">
+    update user_identify
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="familyName != null">
+        family_name = #{familyName,jdbcType=VARCHAR},
+      </if>
+      <if test="passport != null">
+        passport = #{passport,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null">
+        id_number = #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatCredit != null">
+        wechat_credit = #{wechatCredit,jdbcType=INTEGER},
+      </if>
+      <if test="sesameCredit != null">
+        sesame_credit = #{sesameCredit,jdbcType=INTEGER},
+      </if>
+      <if test="individualIncomeTax != null">
+        individual_income_tax = #{individualIncomeTax,jdbcType=VARCHAR},
+      </if>
+      <if test="alipaySocialSecurity != null">
+        alipay_social_security = #{alipaySocialSecurity,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeDiploma != null">
+        degree_diploma = #{degreeDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null">
+        job = #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.macro.meedog.model.UserIdentify">
+    update user_identify
+    set uid = #{uid,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      family_name = #{familyName,jdbcType=VARCHAR},
+      passport = #{passport,jdbcType=VARCHAR},
+      id_number = #{idNumber,jdbcType=VARCHAR},
+      wechat_credit = #{wechatCredit,jdbcType=INTEGER},
+      sesame_credit = #{sesameCredit,jdbcType=INTEGER},
+      individual_income_tax = #{individualIncomeTax,jdbcType=VARCHAR},
+      alipay_social_security = #{alipaySocialSecurity,jdbcType=VARCHAR},
+      degree_diploma = #{degreeDiploma,jdbcType=VARCHAR},
+      job = #{job,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

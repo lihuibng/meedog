@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.meedog.search.dao.EsUserDao">
+    <resultMap id="esUserListMap" type="com.macro.meedog.search.domain.EsUser" autoMapping="true">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="uid" jdbcType="BIGINT" property="uid"/>
+        <result column="user_level_id" jdbcType="BIGINT" property="userLevelId"/>
+        <result column="user_basic_info_id" jdbcType="BIGINT" property="userBasicInfoId"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="wechat" jdbcType="BIGINT" property="wechat"/>
+        <result column="email" jdbcType="BIGINT" property="email"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="personalized_signature" jdbcType="VARCHAR" property="personalizedSignature"/>
+        <result column="source_type" jdbcType="INTEGER" property="sourceType"/>
+        <result column="integration" jdbcType="INTEGER" property="integration"/>
+        <result column="growth" jdbcType="INTEGER" property="growth"/>
+        <result column="lucky_count" jdbcType="INTEGER" property="luckyCount"/>
+        <result column="history_integration" jdbcType="INTEGER" property="historyIntegration"/>
+        <collection property="basicInfo" columnPrefix="basic_" ofType="com.macro.meedog.search.domain.EsBasicInfo">
+            <id column="id" property="id" jdbcType="BIGINT"/>
+            <result column="uid" property="uid" jdbcType="BIGINT"/>
+            <result column="gender" property="gender" jdbcType="VARCHAR"/>
+            <result column="sexual_orientation" property="sexualOrientation" jdbcType="INTEGER"/>
+            <result column="sexual_orientation_desc" property="sexualOrientationDesc" jdbcType="VARCHAR"/>
+            <result column="birthday" property="birthday" jdbcType="DATE"/>
+            <result column="birth_place" property="birthPlace" jdbcType="VARCHAR"/>
+            <result column="registered_residence" property="registeredResidence" jdbcType="VARCHAR"/>
+            <result column="residence" property="residence" jdbcType="VARCHAR"/>
+            <result column="plan_residence" property="planResidence" jdbcType="VARCHAR"/>
+            <result column="zodiac" property="zodiac" jdbcType="VARCHAR"/>
+            <result column="constellation" property="constellation" jdbcType="VARCHAR"/>
+            <result column="height" property="height" jdbcType="INTEGER"/>
+            <result column="weight" property="weight" jdbcType="INTEGER"/>
+            <result column="bmi" property="bmi" jdbcType="INTEGER"/>
+            <result column="facial_attractiveness" property="facialAttractiveness" jdbcType="INTEGER"/>
+            <result column="job_type" property="jobType" jdbcType="VARCHAR"/>
+            <result column="status" property="status" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+    <select id="getAllEsUserList" resultMap="esUserListMap">
+        select
+        u.id id,
+        u.uid uid,
+        u.nickname nickname,
+        u.username username,
+        u.source_type sourceType,
+        u.integration integration,
+        u.growth growth,
+        u.lucky_count luckyCount,
+        u.history_integration historyIntegration,
+        u.personalized_signature personalizedSignature,
+        ubi.gender gender,
+        ubi.sexual_orientation sexualOrientation,
+        ubi.sexual_orientation_desc sexualOrientationDesc,
+        ubi.birthday birthday,
+        ubi.birth_place birthPlace,
+        ubi.registered_residence registeredResidence,
+        ubi.residence residence,
+        ubi.plan_residence planResidence,
+        ubi.zodiac zodiac,
+        ubi.constellation constellation,
+        ubi.height height,
+        ubi.weight weight,
+        ubi.bmi bmi,
+        ubi.facial_attractiveness facialAttractiveness,
+        ubi.job_type jobType
+        from user u
+        left join user_basic_info ubi on u.user_basic_info_id = ubi.id
+        where u.status = 1 and ubi.status = 1;
+        <if test="id != null">
+            and u.id=#{id}
+        </if>
+    </select>
+</mapper>

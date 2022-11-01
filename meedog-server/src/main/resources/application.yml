@@ -1,0 +1,105 @@
+spring:
+  application:
+    name: meedog-server
+  profiles:
+    active: dev #默认为开发环境
+  mail:
+    default-encoding: UTF-8
+    host: smtp.163.com
+    username: "xxxxxx"
+    password:
+    port: 25
+    protocol: smtp
+    test-connection: false
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.ssl.enable: true
+
+mybatis:
+  mapper-locations:
+    - classpath:dao/*.xml
+    - classpath*:com/**/mapper/*.xml
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: meedog-server-secret #JWT加解密使用的密钥
+  expiration: 172800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer '  #JWT负载中拿到开头
+
+secure:
+  ignored:
+    urls: #安全路径白名单
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /swagger/**
+      - /**/v2/api-docs
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /webjars/springfox-swagger-ui/**
+      - /druid/**
+      - /actuator/**
+      - /sso/**
+      - /wx/**
+      - /home/**
+      - /product/**
+      - /brand/**
+
+# 自定义redis key
+redis:
+  repositories:
+    enabled: false
+  database: meedog
+  key:
+    authCode: 'm_authcode'
+    user: 'm_user'
+    uid: 'm_uid'
+    province: 'province'
+    zodiac: 'zodiac'
+    constellation: 'constellation'
+    degree: 'degree'
+    city: 'city'
+    country: 'country'
+    user_city: 'user_city'
+    area: 'area'
+    marriage: 'marriage'
+    households: 'households'
+    college_status: 'college_status'
+    house_district: 'house_district'
+  expire:
+    authCode: 1800 # 验证码超期时间
+    common: 3600 # 1小时
+
+kafka:
+  bootstrap-servers: "xxxxxx":9092
+  admin:
+    connections-max-idle-ms: 540000
+    metadata-max-age-ms: 300000
+    client-id: meedog-admin
+
+  consumer:
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    group-id: 'meedog-test'
+    enable-auto-commit: true
+    auto-commit-interval-ms: 5000
+    session-timeout-ms: 30000
+    fetch-min-bytes: 1
+    max-partition-fetch-bytes: 1048576
+
+  producer:
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    buffer-memory: 33554432
+    batch-size: 16384
+    linger-ms: 1000
+    retries: 0
+  listener:
+    log-container-config: false
+    concurrency: 5
+
+
+

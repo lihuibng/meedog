@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.meedog.mapper.WorldCityMapper">
+  <resultMap id="BaseResultMap" type="com.macro.meedog.model.WorldCity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="country_id" jdbcType="BIGINT" property="countryId" />
+    <result column="country_code" jdbcType="VARCHAR" property="countryCode" />
+    <result column="chinese_country_name" jdbcType="VARCHAR" property="chineseCountryName" />
+    <result column="english_country_name" jdbcType="VARCHAR" property="englishCountryName" />
+    <result column="state_code" jdbcType="VARCHAR" property="stateCode" />
+    <result column="chinese_state_name" jdbcType="VARCHAR" property="chineseStateName" />
+    <result column="english_state_name" jdbcType="VARCHAR" property="englishStateName" />
+    <result column="city_code" jdbcType="VARCHAR" property="cityCode" />
+    <result column="chinese_city_name" jdbcType="VARCHAR" property="chineseCityName" />
+    <result column="english_city_name" jdbcType="VARCHAR" property="englishCityName" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, country_id, country_code, chinese_country_name, english_country_name, state_code, 
+    chinese_state_name, english_state_name, city_code, chinese_city_name, english_city_name, 
+    status, create_time, modified_time
+  </sql>
+  <select id="selectByExample" parameterType="com.macro.meedog.model.WorldCityExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from world_city
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from world_city
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from world_city
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.macro.meedog.model.WorldCityExample">
+    delete from world_city
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.macro.meedog.model.WorldCity">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into world_city (country_id, country_code, chinese_country_name, 
+      english_country_name, state_code, chinese_state_name, 
+      english_state_name, city_code, chinese_city_name, 
+      english_city_name, status, create_time, 
+      modified_time)
+    values (#{countryId,jdbcType=BIGINT}, #{countryCode,jdbcType=VARCHAR}, #{chineseCountryName,jdbcType=VARCHAR}, 
+      #{englishCountryName,jdbcType=VARCHAR}, #{stateCode,jdbcType=VARCHAR}, #{chineseStateName,jdbcType=VARCHAR}, 
+      #{englishStateName,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{chineseCityName,jdbcType=VARCHAR}, 
+      #{englishCityName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifiedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.macro.meedog.model.WorldCity">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into world_city
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="countryId != null">
+        country_id,
+      </if>
+      <if test="countryCode != null">
+        country_code,
+      </if>
+      <if test="chineseCountryName != null">
+        chinese_country_name,
+      </if>
+      <if test="englishCountryName != null">
+        english_country_name,
+      </if>
+      <if test="stateCode != null">
+        state_code,
+      </if>
+      <if test="chineseStateName != null">
+        chinese_state_name,
+      </if>
+      <if test="englishStateName != null">
+        english_state_name,
+      </if>
+      <if test="cityCode != null">
+        city_code,
+      </if>
+      <if test="chineseCityName != null">
+        chinese_city_name,
+      </if>
+      <if test="englishCityName != null">
+        english_city_name,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifiedTime != null">
+        modified_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="countryId != null">
+        #{countryId,jdbcType=BIGINT},
+      </if>
+      <if test="countryCode != null">
+        #{countryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="chineseCountryName != null">
+        #{chineseCountryName,jdbcType=VARCHAR},
+      </if>
+      <if test="englishCountryName != null">
+        #{englishCountryName,jdbcType=VARCHAR},
+      </if>
+      <if test="stateCode != null">
+        #{stateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="chineseStateName != null">
+        #{chineseStateName,jdbcType=VARCHAR},
+      </if>
+      <if test="englishStateName != null">
+        #{englishStateName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="chineseCityName != null">
+        #{chineseCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="englishCityName != null">
+        #{englishCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.macro.meedog.model.WorldCityExample" resultType="java.lang.Long">
+    select count(*) from world_city
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update world_city
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.countryId != null">
+        country_id = #{record.countryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.countryCode != null">
+        country_code = #{record.countryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chineseCountryName != null">
+        chinese_country_name = #{record.chineseCountryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.englishCountryName != null">
+        english_country_name = #{record.englishCountryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stateCode != null">
+        state_code = #{record.stateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chineseStateName != null">
+        chinese_state_name = #{record.chineseStateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.englishStateName != null">
+        english_state_name = #{record.englishStateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityCode != null">
+        city_code = #{record.cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chineseCityName != null">
+        chinese_city_name = #{record.chineseCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.englishCityName != null">
+        english_city_name = #{record.englishCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedTime != null">
+        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update world_city
+    set id = #{record.id,jdbcType=BIGINT},
+      country_id = #{record.countryId,jdbcType=BIGINT},
+      country_code = #{record.countryCode,jdbcType=VARCHAR},
+      chinese_country_name = #{record.chineseCountryName,jdbcType=VARCHAR},
+      english_country_name = #{record.englishCountryName,jdbcType=VARCHAR},
+      state_code = #{record.stateCode,jdbcType=VARCHAR},
+      chinese_state_name = #{record.chineseStateName,jdbcType=VARCHAR},
+      english_state_name = #{record.englishStateName,jdbcType=VARCHAR},
+      city_code = #{record.cityCode,jdbcType=VARCHAR},
+      chinese_city_name = #{record.chineseCityName,jdbcType=VARCHAR},
+      english_city_name = #{record.englishCityName,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.macro.meedog.model.WorldCity">
+    update world_city
+    <set>
+      <if test="countryId != null">
+        country_id = #{countryId,jdbcType=BIGINT},
+      </if>
+      <if test="countryCode != null">
+        country_code = #{countryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="chineseCountryName != null">
+        chinese_country_name = #{chineseCountryName,jdbcType=VARCHAR},
+      </if>
+      <if test="englishCountryName != null">
+        english_country_name = #{englishCountryName,jdbcType=VARCHAR},
+      </if>
+      <if test="stateCode != null">
+        state_code = #{stateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="chineseStateName != null">
+        chinese_state_name = #{chineseStateName,jdbcType=VARCHAR},
+      </if>
+      <if test="englishStateName != null">
+        english_state_name = #{englishStateName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="chineseCityName != null">
+        chinese_city_name = #{chineseCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="englishCityName != null">
+        english_city_name = #{englishCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.macro.meedog.model.WorldCity">
+    update world_city
+    set country_id = #{countryId,jdbcType=BIGINT},
+      country_code = #{countryCode,jdbcType=VARCHAR},
+      chinese_country_name = #{chineseCountryName,jdbcType=VARCHAR},
+      english_country_name = #{englishCountryName,jdbcType=VARCHAR},
+      state_code = #{stateCode,jdbcType=VARCHAR},
+      chinese_state_name = #{chineseStateName,jdbcType=VARCHAR},
+      english_state_name = #{englishStateName,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      chinese_city_name = #{chineseCityName,jdbcType=VARCHAR},
+      english_city_name = #{englishCityName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

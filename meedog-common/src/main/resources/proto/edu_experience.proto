@@ -1,0 +1,69 @@
+syntax = "proto3";
+package com.marco.meedog.user;
+
+import "google/protobuf/timestamp.proto";
+// [END declaration]
+
+option java_package = "com.macro.meedog.common.proto";
+option java_outer_classname = "EducationExperience";
+
+enum DegreeType {
+  // 0: 没读过书 1: 小学 2: 初中 3: 中专 4: 高中 5: 大专
+  // 6: 成人本科 7: 本科 8: 研究生 9: 在职研究生 10: MBA 11: 博士 12: 博士后 13: 其他
+  NoSchool = 0;
+  PrimarySchool = 1;
+  JuniorSchool = 2;
+  TechSecondarySchool = 3;
+  HighSchool = 4;
+  JuniorCollege = 5;
+  AdultUndergraduate = 6;
+  Bachelor = 7;
+  Master = 8;
+  ParttimeGraduate = 9;
+  MBA = 10;
+  Doctor = 11;
+  PostDoctor = 12;
+  OtherDegree = 13;
+}
+
+enum CountryType {
+  // 0: 国内 1: 港澳台 2: 美国 3: 加拿大 4: 英国 5: 欧洲 6: 澳洲 7: 其他
+  China = 0;
+  ChinaHKAMTW = 1;
+  America = 2;
+  Canada = 3;
+  UK = 4;
+  Europe = 5;
+  Australia = 6;
+  OtherCountry = 300;
+}
+message GeoPoint {
+  double latitude = 1;
+  double longtitude = 2;
+}
+message EduExperience {
+  uint64 id = 1;
+  uint64 uid = 2;
+  DegreeType degree = 3;
+  CountryType abroad = 4;
+  google.protobuf.Timestamp start = 5;
+  google.protobuf.Timestamp end = 6;
+  string school = 7;
+  GeoPoint location = 8;
+  string geohash = 9;
+  string country = 10;
+  string city = 11;
+  string language = 12;
+  string dormitory = 13;
+  string academic_building = 14;
+  string teacher = 15;
+  string major = 16;
+  string description = 17;
+  int32 status = 18;
+  google.protobuf.Timestamp create_time = 19;
+  google.protobuf.Timestamp modified_time = 20;
+}
+
+message EduExperiences {
+  repeated EduExperience experience = 1;
+}

@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.meedog.mapper.PlaceMapper">
+  <resultMap id="BaseResultMap" type="com.macro.meedog.model.Place">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="location" jdbcType="OTHER" property="location" typeHandler="com.macro.meedog.common.geo.MysqlGeoPointTypeHandler" />
+    <result column="accuracy" jdbcType="INTEGER" property="accuracy" />
+    <result column="horizontalAccuracy" jdbcType="INTEGER" property="horizontalaccuracy" />
+    <result column="verticalAccuracy" jdbcType="INTEGER" property="verticalaccuracy" />
+    <result column="altitude" jdbcType="INTEGER" property="altitude" />
+    <result column="speed" jdbcType="INTEGER" property="speed" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.locationCriteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler} and #{criterion.secondValue,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.locationCriteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler} and #{criterion.secondValue,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, score, price, province, city, district, address, location, accuracy, horizontalAccuracy, 
+    verticalAccuracy, altitude, speed, phone, tags, start_time, end_time, status, create_time, 
+    modified_time
+  </sql>
+  <select id="selectByExample" parameterType="com.macro.meedog.model.PlaceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from place
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from place
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from place
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.macro.meedog.model.PlaceExample">
+    delete from place
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.macro.meedog.model.Place">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into place (name, score, price, 
+      province, city, district, 
+      address, location, 
+      accuracy, horizontalAccuracy, verticalAccuracy, 
+      altitude, speed, phone, 
+      tags, start_time, end_time, 
+      status, create_time, modified_time
+      )
+    values (#{name,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler}, 
+      #{accuracy,jdbcType=INTEGER}, #{horizontalaccuracy,jdbcType=INTEGER}, #{verticalaccuracy,jdbcType=INTEGER}, 
+      #{altitude,jdbcType=INTEGER}, #{speed,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, 
+      #{tags,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.macro.meedog.model.Place">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into place
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="district != null">
+        district,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="accuracy != null">
+        accuracy,
+      </if>
+      <if test="horizontalaccuracy != null">
+        horizontalAccuracy,
+      </if>
+      <if test="verticalaccuracy != null">
+        verticalAccuracy,
+      </if>
+      <if test="altitude != null">
+        altitude,
+      </if>
+      <if test="speed != null">
+        speed,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="tags != null">
+        tags,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifiedTime != null">
+        modified_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler},
+      </if>
+      <if test="accuracy != null">
+        #{accuracy,jdbcType=INTEGER},
+      </if>
+      <if test="horizontalaccuracy != null">
+        #{horizontalaccuracy,jdbcType=INTEGER},
+      </if>
+      <if test="verticalaccuracy != null">
+        #{verticalaccuracy,jdbcType=INTEGER},
+      </if>
+      <if test="altitude != null">
+        #{altitude,jdbcType=INTEGER},
+      </if>
+      <if test="speed != null">
+        #{speed,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.macro.meedog.model.PlaceExample" resultType="java.lang.Long">
+    select count(*) from place
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update place
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=DECIMAL},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.district != null">
+        district = #{record.district,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.location != null">
+        location = #{record.location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler},
+      </if>
+      <if test="record.accuracy != null">
+        accuracy = #{record.accuracy,jdbcType=INTEGER},
+      </if>
+      <if test="record.horizontalaccuracy != null">
+        horizontalAccuracy = #{record.horizontalaccuracy,jdbcType=INTEGER},
+      </if>
+      <if test="record.verticalaccuracy != null">
+        verticalAccuracy = #{record.verticalaccuracy,jdbcType=INTEGER},
+      </if>
+      <if test="record.altitude != null">
+        altitude = #{record.altitude,jdbcType=INTEGER},
+      </if>
+      <if test="record.speed != null">
+        speed = #{record.speed,jdbcType=INTEGER},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tags != null">
+        tags = #{record.tags,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null">
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedTime != null">
+        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update place
+    set id = #{record.id,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=DECIMAL},
+      price = #{record.price,jdbcType=DECIMAL},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      district = #{record.district,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      location = #{record.location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler},
+      accuracy = #{record.accuracy,jdbcType=INTEGER},
+      horizontalAccuracy = #{record.horizontalaccuracy,jdbcType=INTEGER},
+      verticalAccuracy = #{record.verticalaccuracy,jdbcType=INTEGER},
+      altitude = #{record.altitude,jdbcType=INTEGER},
+      speed = #{record.speed,jdbcType=INTEGER},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      tags = #{record.tags,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.macro.meedog.model.Place">
+    update place
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler},
+      </if>
+      <if test="accuracy != null">
+        accuracy = #{accuracy,jdbcType=INTEGER},
+      </if>
+      <if test="horizontalaccuracy != null">
+        horizontalAccuracy = #{horizontalaccuracy,jdbcType=INTEGER},
+      </if>
+      <if test="verticalaccuracy != null">
+        verticalAccuracy = #{verticalaccuracy,jdbcType=INTEGER},
+      </if>
+      <if test="altitude != null">
+        altitude = #{altitude,jdbcType=INTEGER},
+      </if>
+      <if test="speed != null">
+        speed = #{speed,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.macro.meedog.model.Place">
+    update place
+    set name = #{name,jdbcType=VARCHAR},
+      score = #{score,jdbcType=DECIMAL},
+      price = #{price,jdbcType=DECIMAL},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      location = #{location,jdbcType=OTHER,typeHandler=com.macro.meedog.common.geo.MysqlGeoPointTypeHandler},
+      accuracy = #{accuracy,jdbcType=INTEGER},
+      horizontalAccuracy = #{horizontalaccuracy,jdbcType=INTEGER},
+      verticalAccuracy = #{verticalaccuracy,jdbcType=INTEGER},
+      altitude = #{altitude,jdbcType=INTEGER},
+      speed = #{speed,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
